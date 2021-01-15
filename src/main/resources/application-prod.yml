@@ -1,0 +1,17 @@
+server:
+  port: ${PORT}
+corsPaths: ""
+clientId: ${CLIENT_ID}
+clientSecret: ${CLIENT_SECRET}
+authServer: ${ATUH_SERVER}
+resources:
+  - name: People Finder
+    alias: peoplesvc
+    server: ${PEOPLE_SVC_URL}/api
+    healthUrl: ${PEOPLE_SVC_URL}/api/actuator/health
+    route: /people
+  - name: Manga Tracker
+    alias: mangasvc
+    server: ${MANGA_SVC_URL}/api
+    healthUrl: ${MANGA_SVC_URL}/api/actuator/health
+    route: /manga

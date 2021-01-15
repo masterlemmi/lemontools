@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class UIApp extends SpringBootServletInitializer {
+public class UIApp  {
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(UIApp.class, args);
