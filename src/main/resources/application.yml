@@ -1,0 +1,17 @@
+server:
+  port: 8089
+corsPaths: "/**"
+clientId: newClient
+clientSecret: 259641ab-df6a-4c11-ad97-08dcf87579b6
+authServer: http://localhost:8083/auth/realms/baeldung/protocol/openid-connect
+resources:
+  - name: People Finder
+    alias: peoplesvc
+    server: http://localhost:8081/api
+    healthUrl: http://localhost:8081/api/actuator/health
+    route: /people
+  - name: Manga Tracker
+    alias: mangasvc
+    server: http://localhost:8082/api
+    healthUrl: http://localhost:8082/api/actuator/health
+    route: /manga

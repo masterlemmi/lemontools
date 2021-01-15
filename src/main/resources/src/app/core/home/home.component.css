@@ -1,0 +1,12 @@
+.container {
+    margin-top: 2em;
+}
+
+.columns {
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.message-header {
+    margin-bottom: 1em;
+}

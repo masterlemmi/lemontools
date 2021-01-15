@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button [matMenuTriggerFor]="menu" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/people']">
+        <i class="material-icons" style="padding-right: .5em;">person_search</i>
+        <span>People</span>
+      </button>
+            <button mat-menu-item [routerLink]="['/manga']">
+        <i class="material-icons" style="padding-right: .5em;">menu_book</i>
+        <span>Manga</span>
+      </button>
+
+
+        </mat-menu>
+
+        <span (click)="home()">LemTools</span>
+
+        <span class="example-spacer"></span>
+        <button mat-icon-button class="example-icon" aria-label="Logout" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
+    </mat-toolbar-row>
+
+</mat-toolbar>

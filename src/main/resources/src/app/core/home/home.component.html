@@ -1,0 +1,29 @@
+<div class="container">
+    <article class="message is-info">
+        <div class="message-header">
+            <p>Resources</p>
+            <button *ngIf="!refreshing; else spin" (click)="refresh()" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                <mat-icon>refresh</mat-icon>
+              </button>
+            <ng-template #spin>
+                <mat-spinner [diameter]="25"></mat-spinner>
+            </ng-template>
+        </div>
+        <div *ngFor="let r of resources" class="columns is-mobile is-vcentered">
+            <div class="column is-one-third  ">
+                <a [routerLink]="[r.route]"> {{r.name}} </a>
+            </div>
+            <div class="column is-two-thirds">
+
+                <i style="color: green" *ngIf="r.health === 'UP'; else down" class="material-icons">thumb_up</i>
+                <ng-template #down>
+                    <i style="color:red" class="material-icons">thumb_down</i>
+                </ng-template>
+            </div>
+
+        </div>
+
+
+    </article>
+
+</div>

@@ -1,0 +1,11 @@
+.logo {
+    width: 10rem;
+    height: 2rem;
+    background-image: url("assets/logo.jpg");
+    background-size: cover;
+    background-position: center center;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+  }

@@ -1,0 +1,172 @@
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <h2 class="title">
+                Edit Profile
+            </h2>
+            <h4 class="subtitle">
+                {{p.fullName}}
+            </h4>
+        </div>
+    </div>
+</section>
+
+
+
+
+<div class="container">
+    <form [formGroup]="myForm">
+        <!-- (ngSubmit)="onSubmit(myForm)"> -->
+        <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <i class="material-icons" style="padding-right: 1em">info</i> Basic Info
+                    </mat-panel-title>
+
+                </mat-expansion-panel-header>
+                <div class="field">
+                    <label class="label has-text-left">First Name</label>
+                    <div class="control">
+                        <input formControlName="firstName" class="input" type="text">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label has-text-left">Last Name</label>
+                    <div class="control">
+                        <input formControlName="lastName" class="input" type="text">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label has-text-left">Nickame</label>
+                    <div class="control">
+                        <input formControlName="nickname" class="input" type="text">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label has-text-left">Photo</label>
+                    <div class="control">
+                        <input formControlName="photoUrl" class="input" type="text">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label has-text-left">Email</label>
+                    <div class="control">
+                        <input formControlName="email" class="input" type="email">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label has-text-left">Address</label>
+                    <div class="control">
+                        <input formControlName="address" class="input" type="text">
+                    </div>
+                </div>
+
+
+                <div class="field">
+                    <label class="label has-text-left">Birthday</label>
+                    <div class="control">
+                        <input formControlName="dateOfBirth" class="input" type="date">
+                    </div>
+                </div>
+
+
+
+                <div class="columns is-mobile">
+                    <div class="column is-one-third">
+                        <label class="label has-text-left">Deceased</label>
+                    </div>
+                    <div class="column is-one-quarter">
+                        <label style="padding-right:1em">Yes</label><input formControlName="deceased" type="radio"
+                            [value]="true" name="deceased">
+                    </div>
+                    <div class="column is-one-quarter">
+                        <label style="padding-right:1em">No</label><input formControlName="deceased" type="radio"
+                            [value]="false" name="deceased">
+                    </div>
+
+                </div>
+
+                <div class="field" *ngIf="myForm.value.deceased">
+                    <label class="label has-text-left">Death</label>
+                    <div class="control">
+                        <input formControlName="dateOfDeath" class="input" type="date">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label has-text-left">Notes</label>
+                    <div class="control">
+                        <textarea class="textarea" formControlName="notes"></textarea>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <i class="material-icons" style="padding-right: 1em">stroller</i> Children
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="block">
+                    <span class="tag" *ngFor="let c of myForm.value.children"
+                        style="margin-top: .5em; margin-inline-end: .5em;">
+                        {{c.fullName}}
+                        <button class="delete is-small" (click)="deleteChild(c)"></button>
+                    </span>
+                </div>
+
+                <mat-form-field class="example-full-width">
+                    <input type="text" placeholder="Find Child" aria-label="Number" matInput
+                        [formControl]="namesListControl" [matAutocomplete]="auto">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.fullName"
+                            (click)=addChild(option)>
+                            {{option.fullName}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <a (click)="createNewPerson()" class="help is-success">Create New Person</a>
+
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <i class="material-icons" style="padding-right: 1em">groups</i> Relationships
+                    </mat-panel-title>
+
+                </mat-expansion-panel-header>
+                <!---dta here-->
+
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <i class="material-icons" style="padding-right: 1em">link</i> Links
+                    </mat-panel-title>
+
+                </mat-expansion-panel-header>
+                <!---dta here-->
+
+            </mat-expansion-panel>
+        </mat-accordion>
+
+
+
+        <hr />
+
+
+        <div class="field is-grouped">
+            <div class="control">
+                <button mat-raised-button color="primary" >Save</button>
+            </div>
+            <div class="control">
+                <button mat-raised-button >Cancel</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>

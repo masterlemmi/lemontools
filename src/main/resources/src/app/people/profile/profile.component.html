@@ -1,0 +1,91 @@
+<div class="container profile-container" style="padding-bottom: 2em;" *ngIf="person$ | async as p">
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <div mat-card-avatar style="background-image: url({{p.photoUrl}});
+                background-size: cover; height: 100px; width: 100px; float:left; padding-right:1em">
+                </div>
+                <div style="margin-left: 7em">
+                    <h1 class="title">
+                        {{p.fullName}}
+                    </h1>
+                    <h2 class="subtitle">
+                        {{p.nickname}}
+                    </h2>
+
+                </div>
+            </div>
+            <div style="float:right; position: absolute; top: 2em; right: 2em">
+                <i (click)="edit(p)" class="material-icons is-clickable">mode_edit</i>
+            </div>
+        </div>
+
+
+    </section>
+
+    <mat-card style="padding-bottom:0">
+        <div class="columns is-mobile p-0">
+            <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">Age</label></div>
+            <div class="column p-0"> {{p.age}} </div>
+        </div>
+        <div class="columns is-mobile p-0">
+            <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">Birthday</label>
+            </div>
+            <div class="column p-0"> {{p.dateOfBirth}} </div>
+        </div>
+        <div class="columns is-mobile p-0" *ngIf="p.deceased">
+            <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">Death</label>
+            </div>
+            <div class="column p-0"> {{p.dateOfDeath}} </div>
+        </div>
+        <div class="columns is-mobile p-0" *ngIf="p.parents.length">
+            <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">Parents</label>
+            </div>
+            <div class="column p-0 has-text-right">
+                <a *ngFor="let pts of p.parents" class=" p-0 has-text-left" (click)="toRoute(pts.id)"
+                    style="display:block">{{pts.fullName}}</a>
+
+            </div>
+        </div>
+        <div class="columns is-mobile p-0" *ngIf="p.siblings.length">
+            <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">Siblings</label>
+            </div>
+            <div class="column p-0 has-text-right">
+                <a *ngFor="let sib of p.siblings" class=" p-0 has-text-left" (click)="toRoute(sib.id)"
+                    style="display:block">{{sib.fullName}}</a>
+            </div>
+        </div>
+        <div class="columns is-mobile p-0" *ngIf="p.children.length">
+            <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">Children</label>
+            </div>
+            <div class="column p-0 has-text-right">
+                <a *ngFor="let c of p.children" class=" p-0 has-text-left" (click)="toRoute(c.id)"
+                    style="display:block">{{c.fullName}}</a>
+            </div>
+        </div>
+        <div class="columns is-mobile p-0" *ngIf="p.links.length">
+            <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">Links</label>
+            </div>
+            <div class="column p-0 has-text-right">
+                <a *ngFor="let c of p.links" class=" p-0 has-text-left" href="c.url" target="_blank"
+                    style="display:block">{{c.name}}</a>
+            </div>
+        </div>
+        <div class="columns is-mobile p-0" *ngFor="let rel of p.relationships">
+            <div class="column is-one-third is-size-1-mobile p-0"> <label
+                    class="label has-text-right">{{rel.label}}</label></div>
+            <div class="column p-0 has-text-right">
+                <a *ngFor="let c of rel.people" class=" p-0 has-text-left" (click)="toRoute(c.id)"
+                    style="display:block">{{c.fullName}}</a>
+            </div>
+        </div>
+
+        <div class="columns is-mobile p-0">
+            <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">Notes</label>
+            </div>
+            <div class="column p-0 has-text-left">
+                {{p.notes}}
+            </div>
+        </div>
+    </mat-card>
+</div>

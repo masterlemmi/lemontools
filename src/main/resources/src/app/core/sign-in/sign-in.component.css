@@ -1,0 +1,43 @@
+.mainbody {
+    background-image: url("assets/logo.jpg");
+}
+
+#mydiv {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+}
+
+.blocktext {
+    margin-left: auto;
+    margin-right: auto;
+    width: 8em
+}
+
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+}
+
+.hero {
+    background-image: linear-gradient( to right bottom, rgba(lightgreen, 0.7), rgba(yellow, .8)), url('assets/lemonbg.jpg') !important;
+    background-size: cover;
+    background-position: center center;
+}
+
+.atestdiv {
+    background-image: url('https://drive.google.com/uc?export=view&id=1ycnQ_338vnsVhMJr3D7l6UnFyuQlzolJ') !important;
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+    margin: 20px;
+    -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
+}
+
+.atestdiv {
+    background-image: url('https://drive.google.com/uc?export=view&id=1ycnQ_338vnsVhMJr3D7l6UnFyuQlzolJ') !important;
+}
