@@ -19,12 +19,13 @@ public class LoginController {
     @Autowired
     ResourceProperties props;
 
-    RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    RestTemplate restTemplate;
+
 
     @PostMapping("/users/authenticate")
     public UserInfo login(@RequestBody Credentials data) {
 
-        RestTemplate restTemplate = new RestTemplate();
         String url = props.getAuthServer() + "/token";
 
         HttpHeaders headers = new HttpHeaders();
@@ -36,6 +37,7 @@ public class LoginController {
         map.add("password", data.getPassword());
         map.add("grant_type", "password");
         map.add("scope", "read write");
+
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
