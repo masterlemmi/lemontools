@@ -82,6 +82,7 @@ public class LoginController {
     private String getHealth(String url, String token) {
 
         try {
+            System.out.println("----> GETTING HEATLH from " + url);
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             headers.setBearerAuth(token);
@@ -89,6 +90,8 @@ public class LoginController {
             HttpEntity<String> entity = new HttpEntity<>("", headers);
 
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+
+            System.out.println("---------> RESP: " + response.getBody());
 
             return response.getBody();
 
@@ -100,6 +103,8 @@ public class LoginController {
                     throw new ResponseStatusException(
                             HttpStatus.UNAUTHORIZED, "Not Authorized");
             }
+
+            System.out.println("ERRORRR---> " + e.getMessage());
             e.printStackTrace();
 
         }

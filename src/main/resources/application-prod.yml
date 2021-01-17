@@ -4,14 +4,3 @@ corsPaths: ""
 clientId: ${CLIENT_ID}
 clientSecret: ${CLIENT_SECRET}
 authServer: ${ATUH_SERVER}
-resources:
-  - name: People Finder
-    alias: peoplesvc
-    server: ${PEOPLESVC_URL}/api
-    healthUrl: ${PEOPLESVC_URL}/api/actuator/health
-    route: /people
-  - name: Manga Tracker
-    alias: mangasvc
-    server: ${MANGASVC_URL}/api
-    healthUrl: ${MANGASVC_URL}/api/actuator/health
-    route: /manga
