@@ -14,8 +14,6 @@ import { Resource, ResourceService } from 'app/shared/services/resource.service'
 
 export class HomeComponent implements OnInit {
 
-    public foo = new Foo(1, 'sample foo');
-    private foosUrl = 'http://localhost:8081/api/foos/';
     resources: Resource[] = []
     refreshing: boolean = false;
 
