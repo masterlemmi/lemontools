@@ -63,8 +63,9 @@ public class WebConfig implements WebMvcConfigurer {
         CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(csf).build();
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
         requestFactory.setHttpClient(httpClient);
-        RestTemplate restTemplate = new RestTemplate(requestFactory);
-        return restTemplate;
+        requestFactory.setConnectionRequestTimeout(25000);
+        return new RestTemplate(requestFactory);
+
     }
 
 
