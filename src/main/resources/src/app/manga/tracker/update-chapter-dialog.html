@@ -1,0 +1,18 @@
+<div class="container">
+    <div [hidden]="submitted">
+        <h1>{{data.title}}</h1>
+        <br/>
+        <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+            <div class="form-group">
+                <label for="name">Chapter Url or     <a (click)="model.url = 'latest'">Latest</a></label>
+                <input type="text" class="form-control" id="name" required [(ngModel)]="model.url" name="name" #name="ngModel">
+                <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                    Chapter is required
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Update</button>
+        </form>
+    </div>
+
+
+</div>

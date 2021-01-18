@@ -18,7 +18,6 @@ import { SearchComponent } from './search/search.component';
   ],
   exports: [SearchComponent, SharedModule], 
   providers: [
-    //PersonService
     DatePipe
   ]
 })

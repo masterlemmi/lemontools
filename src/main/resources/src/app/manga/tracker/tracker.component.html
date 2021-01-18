@@ -1,0 +1,57 @@
+<div class="container">
+    <br/>
+    <h1 class="title">
+        Manga Tracker <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+            <mat-icon *ngIf="!refreshing; else spin" (click)="fetchUpdates()">refresh</mat-icon>
+            <ng-template #spin><mat-spinner [diameter]="30"></mat-spinner></ng-template>
+        </button>
+    </h1>
+    <h1 class="subtitle">
+        <button mat-raised-button color="accent"><i class="material-icons">add</i> Add New </button>
+    </h1>
+    <table cdk-table [dataSource]="dataSource" class="table is-striped">
+
+        <!-- hasUpdate Column -->
+        <ng-container cdkColumnDef="hasUpdate">
+            <th cdk-header-cell *cdkHeaderCellDef> </th>
+            <td cdk-cell *cdkCellDef="let manga">
+                <img *ngIf="manga.hasUpdate" class="peek" src="https://drive.google.com/uc?export=view&id=1AfuytXl9PDrHeENOAagdgwuJ6nuKxkfq" />
+            </td>
+
+        </ng-container>
+
+        <!-- title Column -->
+        <ng-container cdkColumnDef="title">
+            <th cdk-header-cell *cdkHeaderCellDef> Title </th>
+            <td cdk-cell *cdkCellDef="let manga">
+                <a href="{{manga.url}}" target="_blank">{{manga.title}}</a>
+            </td>
+        </ng-container>
+
+        <!-- lastChapter Column -->
+        <ng-container cdkColumnDef="lastChapter">
+            <th cdk-header-cell *cdkHeaderCellDef> Last Chapter </th>
+            <td cdk-cell *cdkCellDef="let manga">
+                <i (click)="updateChapter(manga)" class="material-icons is-clickable">edit</i> <a href="{{manga.lastChapterUrl}}" target="_blank">{{manga.lastChapter}} </a> </td>
+        </ng-container>
+
+
+        <!-- doneRead Column -->
+        <ng-container cdkColumnDef="doneRead">
+            <th cdk-header-cell *cdkHeaderCellDef> Done </th>
+            <td cdk-cell *cdkCellDef="let manga">
+                <button (click)="markDone(manga)" mat-raised-button color="accent" [disabled]="!manga.hasUpdate">Mark Done</button>
+            </td>
+        </ng-container>
+
+        <!-- id Column
+        <ng-container cdkColumnDef="id">
+            <th cdk-header-cell *cdkHeaderCellDef> id </th>
+            <td cdk-cell *cdkCellDef="let manga"> {{manga.id}} </td>
+        </ng-container> -->
+
+
+        <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+        <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

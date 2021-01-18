@@ -10,7 +10,7 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
 
-{ path: 'manga', component: MainComponent },
+{ path: 'manga', loadChildren: () => import('../manga/manga.module').then(m => m.MangaModule)},
 { path: 'people', loadChildren: () => import('../people/people.module').then(m => m.PeopleModule)},
 { path: '', component: HomeComponent, pathMatch: 'full' },
 { path: 'home', component: HomeComponent },
