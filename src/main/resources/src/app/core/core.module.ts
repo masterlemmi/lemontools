@@ -13,6 +13,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { HomeComponent } from './home/home.component';
+import { HttpXsrfInterceptor } from './_helpers/http-xsrf.interceptor';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { HomeComponent } from './home/home.component';
   exports: [HeaderComponent, FooterComponent, AppRoutingModule, SignInComponent , AlertComponent, LoginComponent, HomeComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true }
   ]
 })
 export class CoreModule {
