@@ -23,7 +23,7 @@ public class CustomLogoutSuccessHandler extends
       Authentication authentication)
       throws IOException, ServletException {
 
-        tokenService.revokeAccessToken();
+        tokenService.revokeAccessToken(authentication.getName());
 
         super.onLogoutSuccess(request, response, authentication);
     }
