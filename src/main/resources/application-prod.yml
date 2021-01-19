@@ -1,6 +1,8 @@
 server:
   port: ${PORT}
-corsPaths: ""
 clientId: ${CLIENT_ID}
 clientSecret: ${CLIENT_SECRET}
 authServer: ${ATUH_SERVER}
+corsPaths: "/**"
+####### resource server configuration properties
+

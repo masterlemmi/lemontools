@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
                 },
                 error => {
                //     this.alertService.error(error);
-                    this._snackBar.open(error, '', {
+                    this._snackBar.open("Invalid Credentials", '', {
                         duration: 10000,
                         horizontalPosition: 'start',
                         verticalPosition: 'top'

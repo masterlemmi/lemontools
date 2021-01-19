@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { ResourceService } from 'app/shared/services/resource.service';
+import { environment } from 'environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,8 +18,8 @@ export class MangaService {
 
   constructor(private resService: ResourceService,
     private http: HttpClient,) {
-      this.mangaUrl = this.resService.getServer("mangasvc") + "/manga";
-    //this.mangaUrl = "http://localhost:8081/api" + "/manga";
+      this.mangaUrl = `${environment.server}/api/manga`;
+    //this.mangaUrl = "http://localhost:8081/api/manga";
   }
 
   getHeaders(method: string): HttpHeaders {

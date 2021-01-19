@@ -14,6 +14,7 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { HomeComponent } from './home/home.component';
 import { HttpXsrfInterceptor } from './_helpers/http-xsrf.interceptor';
+import { XhrInterceptor } from './_helpers/xhr.interceptor';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { HttpXsrfInterceptor } from './_helpers/http-xsrf.interceptor';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }
   ]
 })
 export class CoreModule {

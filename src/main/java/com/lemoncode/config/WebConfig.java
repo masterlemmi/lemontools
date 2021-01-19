@@ -1,5 +1,6 @@
-package com.lemoncode;
+package com.lemoncode.config;
 
+import com.lemoncode.resource.ResourceProperties;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.embedded.tomcat.TomcatContextCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -23,17 +26,28 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
-    ResourceProperties props;
+    Environment env;
+
+    private static final String[] EMPTY_ARRAY = {};
 
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping(props.getCorsPaths());
+        String originsEnv = env.getProperty("ALLOWED_ORIGINS");
+        String[] allowedOrigins = StringUtils.isEmpty(originsEnv)? EMPTY_ARRAY : originsEnv.split(",");
+
+        System.out.println("Allowed Origins") ;
+        Arrays.stream(allowedOrigins ).forEach(System.out::println);
+        registry.addMapping("/**")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedOrigins(allowedOrigins);
+
     }
 
     @Override

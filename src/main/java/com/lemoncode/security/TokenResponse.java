@@ -1,4 +1,4 @@
-package com.lemoncode;
+package com.lemoncode.security;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -10,7 +10,8 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-class KeyCloakResponse {
+public class TokenResponse {
+
     @JsonProperty("access_token")
     String accessToken;
     @JsonProperty("refresh_token")
@@ -22,4 +23,5 @@ class KeyCloakResponse {
     @JsonProperty("token_type")
     String tokenType;
     String scope;
+
 }

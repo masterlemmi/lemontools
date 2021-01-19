@@ -8,6 +8,7 @@ import { PersonSimple } from '../models/person-simple';
 import { Name } from '../models/names';
 import { Cookie } from 'ng2-cookies';
 import { ResourceService } from 'app/shared/services/resource.service';
+import { environment } from 'environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -16,15 +17,13 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class PeopleService {
 
-  private personesUrl: string;
+  private personesUrl: string = `${environment.server}/api/people`;
   allPeopleCache: PersonSimple[] = [];
 
 
 
   constructor(private resService: ResourceService,
-    private http: HttpClient,) {
-      this.personesUrl = this.resService.getServer("peoplesvc") + "/people";
-     }
+    private http: HttpClient,) {     }
 
   updateCache(p: PersonSimple) {
     this.allPeopleCache.push(p);

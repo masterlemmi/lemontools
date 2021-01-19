@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../user';
@@ -20,7 +20,10 @@ export class AuthenticationService {
     }
 
     login(username, password) {
-        return this.http.post<any>(`${environment.server}/users/authenticate`, { username, password })
+        const headers = new HttpHeaders( {
+            authorization : 'Basic ' + btoa(username + ':' + password)
+        } );
+        return this.http.get<any>(`${environment.server}/user`, {headers: headers})
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', JSON.stringify(user));
@@ -33,5 +36,9 @@ export class AuthenticationService {
         // remove user from local storage and set current user to null
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
+        this.http.post<any>(`${environment.server}/logout`, {}, {headers: new HttpHeaders()})
+            .subscribe(data=> {
+                console.log("Successful logout", data);
+            })
     }
 }

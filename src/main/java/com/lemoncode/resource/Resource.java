@@ -1,4 +1,4 @@
-package com.lemoncode;
+package com.lemoncode.resource;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
