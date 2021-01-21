@@ -1,0 +1,163 @@
+<form [formGroup]="myForm">
+
+    <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <i class="material-icons" style="padding-right: 1em">info</i> Basic Info
+                </mat-panel-title>
+
+            </mat-expansion-panel-header>
+            <div class="field">
+                <label class="label has-text-left">First Name</label>
+                <div class="control">
+                    <input formControlName="firstName" class="input" type="text">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label has-text-left">Last Name</label>
+                <div class="control">
+                    <input formControlName="lastName" class="input" type="text">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label has-text-left">Nickame</label>
+                <div class="control">
+                    <input formControlName="nickname" class="input" type="text">
+                </div>
+            </div>
+
+
+            <div class="columns is-mobile">
+                <div class="column is-one-third">
+                    <label class="label has-text-left">Gender</label>
+                </div>
+                <div class="column is-one-quarter">
+                    <label style="padding-right:1em">Male</label><input required formControlName="gender" type="radio" value="M" name="gender">
+                </div>
+                <div class="column is-one-quarter">
+                    <label style="padding-right:1em">Female</label><input formControlName="gender" type="radio" value="F" name="gender">
+                </div>
+                <!-- <div [hidden]="gender.valid || gender.pristine" class="alert alert-danger">
+                    gender is required
+                </div> -->
+
+            </div>
+
+
+
+            <div class="field">
+                <label class="label has-text-left">Photo</label>
+                <div class="control">
+                    <input formControlName="photoUrl" class="input" type="text">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label has-text-left">Email</label>
+                <div class="control">
+                    <input formControlName="email" class="input" type="email">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label has-text-left">Address</label>
+                <div class="control">
+                    <input formControlName="address" class="input" type="text">
+                </div>
+            </div>
+
+
+            <div class="field">
+                <label class="label has-text-left">Birthday</label>
+                <div class="control">
+                    <input formControlName="dateOfBirth" class="input" type="date">
+                </div>
+            </div>
+
+
+
+            <div class="columns is-mobile">
+                <div class="column is-one-third">
+                    <label class="label has-text-left">Deceased</label>
+                </div>
+                <div class="column is-one-quarter">
+                    <label style="padding-right:1em">Yes</label><input formControlName="deceased" type="radio" [value]="true" name="deceased">
+                </div>
+                <div class="column is-one-quarter">
+                    <label style="padding-right:1em">No</label><input formControlName="deceased" type="radio" [value]="false" name="deceased">
+                </div>
+
+            </div>
+
+            <div class="field" *ngIf="myForm.value.deceased">
+                <label class="label has-text-left">Death</label>
+                <div class="control">
+                    <input formControlName="dateOfDeath" class="input" type="date">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label has-text-left">Notes</label>
+                <div class="control">
+                    <textarea class="textarea" formControlName="notes"></textarea>
+                </div>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <i class="material-icons" style="padding-right: 1em">stroller</i> Children
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <children-form [myForm]="myForm" [person]="person"></children-form>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <i class="material-icons" style="padding-right: 1em">groups</i> Relationships
+                </mat-panel-title>
+
+            </mat-expansion-panel-header>
+            <relations-form [myForm]="myForm" [person]="person"></relations-form>
+
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <i class="material-icons" style="padding-right: 1em">link</i> Links
+                </mat-panel-title>
+
+            </mat-expansion-panel-header>
+            <link-form [myForm]="myForm" [person]="person"></link-form>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+
+
+
+    <hr />
+
+
+
+    <div class="field is-grouped">
+        <div class="control">
+            <button mat-raised-button color="primary" [disabled]="!myForm.valid" (click)="submitForm()">Save</button>
+        </div>
+        <div class="control">
+            <button mat-raised-button (click)="back()">Cancel</button>
+        </div>
+    </div>
+
+</form>
+
+
+
+<p>
+    Form Value: {{ myForm.value | json }}
+</p>
+
+
+<p>
+    Form Status: {{ myForm.status }}
+</p>

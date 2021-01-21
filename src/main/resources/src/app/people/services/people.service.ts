@@ -18,7 +18,9 @@ const httpOptions = {
 export class PeopleService {
 
   private personesUrl: string = `${environment.server}/api/people`;
+//  private personesUrl: string = `http://localhost:8081/api/people`;
   allPeopleCache: PersonSimple[] = [];
+  clickHistory: PersonSimple[] = [];
 
 
 
@@ -29,12 +31,33 @@ export class PeopleService {
     this.allPeopleCache.push(p);
   }
 
+  addToHistory(p: PersonSimple){
+    if (this.clickHistory.length == 20){
+      this.clickHistory.pop();
+    }
+
+    const alreadyAdded = this.clickHistory.some( r => r.id == p.id)
+    if (!alreadyAdded){
+      this.clickHistory.unshift(p);
+    }
+  }
+
+  getHistory(){
+    return this.clickHistory;
+  }
+
 
   getHeaders(): HttpHeaders {
     return new HttpHeaders({
-      'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
-      'Authorization': 'Bearer ' + Cookie.get('access_token')
+      'Content-type': 'application/json'
     });
+  }
+
+  createOrUpdatePerson(p: any){
+    return this.http.post<any>(`${this.personesUrl}`, p, {headers: this.getHeaders()}).pipe(
+      tap(_ => this.log(`creating person`)),
+      catchError(this.handleError<any>('searchPersones', []))
+    );
   }
 
   /* GET persones whose name contains search term */

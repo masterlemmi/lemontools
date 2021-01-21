@@ -17,6 +17,7 @@ import { AuthenticationService } from './core/_services/authentication.service';
 export class AppComponent {
 
   currentUser: User;
+//  currentUser: User = new User();
 
   constructor(
     private router: Router,
@@ -25,6 +26,7 @@ export class AppComponent {
     this.authenticationService.currentUser.subscribe(x => {
       this.currentUser = x;
       if (!x){
+       console.log("not authorized");
         this.router.navigate(['/login']);
       }
     });

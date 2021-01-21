@@ -58,7 +58,7 @@ zuul:
     api/people:
       path: /api/people/**
       sensitiveHeaders: Cookie,Set-Cookie
-      url: ${PEOPLESVC_URL}/api/manga
+      url: ${PEOPLESVC_URL}/api/people
 
   Servlet30WrapperFilter:
     pre:

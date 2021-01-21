@@ -18,7 +18,7 @@ export class SearchComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.getRecent();
+    this.people = this.peopleService.getHistory();
   }
 
   search() {
@@ -40,8 +40,11 @@ export class SearchComponent implements OnInit {
     );
   }
 
-  toRoute(id: number) {
-    const rt = `/people/profile/${id}`;
+  toProfile(p: PersonSimple) {
+    const rt = `/people/profile/${p.id}`;
     this.router.navigateByUrl(rt);
+    this.peopleService.addToHistory(p);
   }
+
+  
 }

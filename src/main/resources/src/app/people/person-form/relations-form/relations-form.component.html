@@ -1,0 +1,40 @@
+<mat-card class="example-card" *ngFor="let r of myForm.value.relationships">
+    <mat-card-header>
+        <mat-card-subtitle>{{r.label}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <span class="tag" *ngFor="let p of r.people" style="margin-top: .5em; margin-inline-end: .5em;">
+            {{p.fullName}}
+            <button class="delete is-small" (click)="deleteRelation(r.label, p)"></button>
+        </span>
+    </mat-card-content>
+
+</mat-card>
+
+
+<hr/>
+
+
+<mat-form-field class="example-full-width">
+    <input type="text" placeholder="Label" aria-label="Number" matInput [formControl]="labelsListControl" [matAutocomplete]="labelAuto">
+    <mat-autocomplete autoActiveFirstOption #labelAuto="matAutocomplete">
+        <mat-option *ngFor="let label of labelfilteredOptions | async" [value]="label">
+            {{label}}
+        </mat-option>
+    </mat-autocomplete>
+
+</mat-form-field>
+
+<mat-form-field class="example-full-width" *ngIf="labelsListControl.value">
+    <input type="text" placeholder="Find Person" aria-label="Number" matInput [formControl]="namesListControl" [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.fullName" (click)=addRelation(option)>
+            {{option.fullName}}
+        </mat-option>
+    </mat-autocomplete>
+    <br/>
+
+</mat-form-field>
+<div>
+    <span> Not in list?<a (click)="createNewPerson()" class="help is-success" style="padding-left:1em; display: inline">Create New Person</a> </span>
+</div>

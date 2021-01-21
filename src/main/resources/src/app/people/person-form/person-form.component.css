@@ -1,0 +1,15 @@
+.ng-valid[required],
+.ng-valid.required {
+    border-left: 3px solid #42A948;
+    /* green */
+}
+
+.ng-invalid:not(form) {
+    border-left: 3px solid #a94442;
+    /* red */
+}
+
+input[type=radio].ng-invalid:not(form) {
+    padding: .2em;
+    outline: 2px solid red
+}

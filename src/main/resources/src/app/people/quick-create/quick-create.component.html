@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Quick Create</h2>
+<div class="container">
+    <div [hidden]="submitted">
+        <!-- <h1>New Person Form</h1> -->
+        <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" required [(ngModel)]="model.firstName" name="firstName" #firstName="ngModel">
+                <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
+                    First Name is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" required [(ngModel)]="model.lastName" name="lastName" #lastName="ngModel">
+                <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
+                    Last Name is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select class="form-control" id="gender" required [(ngModel)]="model.gender" name="gender" #gender="ngModel">
+                    <option *ngFor="let g of genders" [value]="g">{{g}}</option>
+                </select>
+                <div [hidden]="gender.valid || gender.pristine" class="alert alert-danger">
+                    gender is required
+                </div>
+            </div>
+
+
+            <button type="button" class="btn btn-default" (click)="onNoClick()">Cancel</button>
+            <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Create & Add</button>
+
+        </form>
+    </div>
+
+    <div [hidden]="!submitted">
+        <h2>Creating person...</h2>
+        <progress class="progress is-small is-primary" max="100">15%</progress>
+    </div>
+</div>

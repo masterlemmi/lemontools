@@ -1,0 +1,9 @@
+.container {
+    padding: .75em;
+}
+
+.subtitle {
+    position: absolute;
+    top: 2em;
+    right: 2em;
+}

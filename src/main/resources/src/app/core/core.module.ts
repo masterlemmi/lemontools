@@ -1,7 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { MainComponent } from './main/main.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { MenuDirective } from './menu.directive';
@@ -18,7 +17,7 @@ import { XhrInterceptor } from './_helpers/xhr.interceptor';
 
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, MainComponent, MenuDirective, SignInComponent, 
+  declarations: [HeaderComponent, FooterComponent,  MenuDirective, SignInComponent, 
     AlertComponent, LoginComponent, HomeComponent],
   imports: [
     SharedModule,AppRoutingModule

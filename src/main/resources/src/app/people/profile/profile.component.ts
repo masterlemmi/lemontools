@@ -5,7 +5,7 @@ import { PeopleService } from '../services/people.service';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/share';
 import { Observable } from 'rxjs/Observable';
-
+import { DatePipe, Location } from '@angular/common';
 
 
 @Component({
@@ -19,7 +19,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private peopleService: PeopleService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private _location: Location,
   ) { }
 
   ngOnInit() {
@@ -39,6 +40,10 @@ export class ProfileComponent implements OnInit {
     const rt = `/people/edit/${p.id}`;
     // this.router.navigateByUrl(rt);
     this.router.navigate([rt], {state: {data: p}});
+  }
+
+  back() {
+    this._location.back();
   }
 
 }

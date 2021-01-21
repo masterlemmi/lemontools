@@ -5,6 +5,7 @@ export class Person {
 firstName : String;
 lastName : String;
 nickname : String;
+gender: string;
 fullName : String;
 initials : String;
 photoUrl : String;

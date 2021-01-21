@@ -1,0 +1,55 @@
+<div class="columns is-mobile" style="padding-bottom: 0;">
+    <div class="column is-one-third has-text-centered	" style="padding-bottom: 0;">
+        <label>Name</label>
+    </div>
+    <div class="column has-text-centered	" style="padding-bottom: 0;">
+        <label>URL</label>
+    </div>
+</div>
+<div class="columns is-mobile" *ngFor="let l of links">
+    <div class="column is-one-third " style="padding-bottom: 0;">
+        <div class="field">
+            <div class="control">
+                <!-- <input class="input " type="text" value="{{l.name}}"> -->
+                <i class="material-icons is-clickable" (click)="deleteLink(l)" style="font-size:15px; padding-right:.5rem">cancel</i> {{l.name}}
+            </div>
+        </div>
+    </div>
+    <div class="column" style="padding-bottom: 0;">
+        <div class="field">
+            <div class="control">
+                <!-- <input class="input " type="text" value="{{l.url}}"> -->
+                {{l.url}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr/>
+<label>Add New URL</label>
+
+<div class="columns is-mobile">
+    <div class="column  " style="padding-bottom: 0;">
+        <div class="field">
+            <div class="control">
+                <input class="input " type="text" value="" placeholder="Site" [(ngModel)]="newLink.name">
+
+            </div>
+        </div>
+    </div>
+    <div class="column " style="padding-bottom: 0;">
+        <div class="field">
+            <div class="control">
+                <input class="input " type="text" value="" placeholder="http://" [(ngModel)]="newLink.url">
+            </div>
+        </div>
+    </div>
+
+    <div class="column is-one-fifth" style="padding-bottom: 0; padding-left:0">
+        <button mat-button (click)="addNewUrl()">
+            <mat-icon>add</mat-icon> Add
+          </button>
+    </div>
+</div>
+
+<br/>

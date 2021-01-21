@@ -1,8 +1,7 @@
 #### Angular Dev Setup  
 1. Prereq services
-   - auth server up john@test.com/123
    - people svc/manga svc - securty disabled
-   - ui server - cors config uncommented: run on 8089 see environment.ts
+   - comment appcomponent
 2. Open Visual Studio
 3. Open Folder on src/mainresources path
 4. ng serve --open
