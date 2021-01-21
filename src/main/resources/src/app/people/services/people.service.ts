@@ -98,7 +98,10 @@ export class PeopleService {
     );
   }
 
-  getAllPeople(): Observable<PersonSimple[]> {
+  getAllPeople(force ?: boolean): Observable<PersonSimple[]> {
+    if (force){
+      this.allPeopleCache.length = 0;
+    }
     return this.allPeopleCache.length ?
       of(this.allPeopleCache) :
       this.http.get<PersonSimple[]>(this.personesUrl, { headers: this.getHeaders() }).pipe(
