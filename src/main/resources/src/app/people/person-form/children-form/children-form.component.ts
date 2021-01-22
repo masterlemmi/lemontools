@@ -55,7 +55,7 @@ export class ChildrenFormComponent implements OnInit {
       console.log('The dialog was closed');
       console.log("result", result);
       if (result != null) {
-        this.addChild(result);
+        this.addChild(result.data);
       }
     });
   }

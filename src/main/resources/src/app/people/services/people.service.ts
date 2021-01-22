@@ -25,35 +25,38 @@ export class PeopleService {
 
 
   constructor(private resService: ResourceService,
-    private http: HttpClient,) {     }
+    private http: HttpClient,) { }
 
   updateCache(p: PersonSimple) {
     this.allPeopleCache.push(p);
   }
 
-  searchCache(val: string, exclude: PersonSimple[]) : Observable<PersonSimple[]> {
-    return of(this.allPeopleCache.filter( person => {
-      const isInArray = exclude.find(x => x.firstName === person.firstName && x.lastName === person.lastName);
-    //  console.log(`${person.firstName} ---> isInArray: ${isInArray} firstNameMatch: ${firstNameMatch} lastNameMtach: ${lastNameMatch}: nickNameMatch : ${nickNameMatch}`)
-      return !isInArray && (person.firstName.toLowerCase().indexOf(val.toLowerCase()) === 0
-                || person.lastName.toLowerCase().indexOf(val.toLowerCase()) === 0
-                || person.nickname ? person.nickname.toLowerCase().indexOf(val.toLowerCase()) === 0 : false )
-    }))
-
+  searchCache(val: string, exclude: PersonSimple[]): Observable<PersonSimple[]> {
+    return of(this.allPeopleCache).pipe(
+      map(peepsArray => {
+        let filtered = peepsArray.filter(person => {
+          const isInArray = exclude.find(x => x.firstName === person.firstName && x.lastName === person.lastName);
+          //  console.log(`${person.firstName} ---> isInArray: ${isInArray} firstNameMatch: ${firstNameMatch} lastNameMtach: ${lastNameMatch}: nickNameMatch : ${nickNameMatch}`)
+          return !isInArray && (person.firstName.toLowerCase().indexOf(val.toLowerCase()) === 0
+            || person.lastName.toLowerCase().indexOf(val.toLowerCase()) === 0
+            || person.nickname ? person.nickname.toLowerCase().indexOf(val.toLowerCase()) === 0 : false)
+        });
+        return filtered;
+      }))
   }
 
-  addToHistory(p: PersonSimple){
-    if (this.clickHistory.length == 20){
+  addToHistory(p: PersonSimple) {
+    if (this.clickHistory.length == 20) {
       this.clickHistory.pop();
     }
 
-    const alreadyAdded = this.clickHistory.some( r => r.id == p.id)
-    if (!alreadyAdded){
+    const alreadyAdded = this.clickHistory.some(r => r.id == p.id)
+    if (!alreadyAdded) {
       this.clickHistory.unshift(p);
     }
   }
 
-  getHistory(){
+  getHistory() {
     return this.clickHistory;
   }
 
@@ -64,8 +67,8 @@ export class PeopleService {
     });
   }
 
-  createOrUpdatePerson(p: any){
-    return this.http.post<any>(`${this.personesUrl}`, p, {headers: this.getHeaders()}).pipe(
+  createOrUpdatePerson(p: any) {
+    return this.http.post<any>(`${this.personesUrl}`, p, { headers: this.getHeaders() }).pipe(
       tap(_ => this.log(`creating person`)),
       catchError(this.handleError<any>('searchPersones', []))
     );
@@ -109,8 +112,8 @@ export class PeopleService {
     );
   }
 
-  getAllPeople(force ?: boolean): Observable<PersonSimple[]> {
-    if (force){
+  getAllPeople(force?: boolean): Observable<PersonSimple[]> {
+    if (force) {
       this.allPeopleCache.length = 0;
     }
     return this.allPeopleCache.length ?
