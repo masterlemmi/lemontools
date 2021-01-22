@@ -1,4 +1,4 @@
-<form [formGroup]="myForm">
+<form [formGroup]="myForm" (keydown.enter)="$event.preventDefault()">
 
     <mat-accordion class="example-headers-align" multi>
         <mat-expansion-panel>

@@ -11,6 +11,7 @@ import { PeopleService } from 'app/people/services/people.service';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { Relation } from 'app/people/models/relation';
+import { of } from 'rxjs/internal/observable/of';
 
 @Component({
   selector: 'relations-form',
@@ -57,7 +58,7 @@ export class RelationsFormComponent implements OnInit {
    // filter and return the values
    filter(val: string): Observable<any[]> {
     // call the service which makes the http-request
-    return this.peopleService.getAllPeople()
+    return of(this.peopleService.allPeopleCache)
       .pipe(
         map(response => response.filter(person => {
           let relationships: Relation[] = this.myForm.get("relationships").value;

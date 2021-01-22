@@ -8,32 +8,32 @@ import { Person } from 'app/people/models/person';
   styleUrls: ['./link-form.component.css']
 })
 export class LinkFormComponent implements OnInit {
-  @Input()  myForm: FormGroup;
-  @Input() person: Person ;
+  @Input() myForm: FormGroup;
+  @Input() person: Person;
   links = [];
-  newLink = {name: '', url: ''}
+  newLink = { name: '', url: '' }
 
   constructor() { }
 
   ngOnInit(): void {
-    this.links =  this.myForm.get("links").value;
+    this.links = this.myForm.get("links").value;
   }
 
-  deleteLink(link){
+  deleteLink(link) {
     this.links = this.links.filter(ln => ln.name !== link.name && ln.url !== link.url);
     this.myForm.patchValue({
       links: this.links
     })
   }
 
-  addNewUrl(){
-  this.links.push({name: this.newLink.name, url: this.newLink.url });
+  onSubmit() {
+    this.links.push({ name: this.newLink.name, url: this.newLink.url });
     this.myForm.patchValue({
       links: this.links
     })
 
-    this.newLink  = {name: '', url: ''}
+    this.newLink = { name: '', url: '' }
   }
 
-  
+
 }

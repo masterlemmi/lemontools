@@ -8,7 +8,7 @@
 <mat-form-field class="example-full-width">
     <input type="text" placeholder="Find Child" aria-label="Number" matInput [formControl]="namesListControl" [matAutocomplete]="auto">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.fullName" (click)=addChild(option)>
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.fullName" (click)="addChild(option)">
             {{option.fullName}}
         </mat-option>
     </mat-autocomplete>

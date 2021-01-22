@@ -19,7 +19,7 @@ export class PeopleService {
 
   private personesUrl: string = `${environment.server}/api/people`;
 //  private personesUrl: string = `http://localhost:8081/api/people`;
-  allPeopleCache: PersonSimple[] = [];
+  public allPeopleCache: PersonSimple[] = [];
   clickHistory: PersonSimple[] = [];
 
 

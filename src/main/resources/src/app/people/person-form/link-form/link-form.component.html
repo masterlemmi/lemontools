@@ -27,29 +27,31 @@
 
 <hr/>
 <label>Add New URL</label>
+<form (ngSubmit)="onSubmit()" #newLinkForm="ngForm">
+    <div class="columns is-mobile">
+        <div class="column  " style="padding-bottom: 0;">
+            <div class="field">
+                <div class="control">
+                    <input class="input " type="text" value="" placeholder="Site" required [(ngModel)]="newLink.name" id="linkName" #linkName="ngModel" name="linkName">
 
-<div class="columns is-mobile">
-    <div class="column  " style="padding-bottom: 0;">
-        <div class="field">
-            <div class="control">
-                <input class="input " type="text" value="" placeholder="Site" [(ngModel)]="newLink.name">
 
+                </div>
             </div>
         </div>
-    </div>
-    <div class="column " style="padding-bottom: 0;">
-        <div class="field">
-            <div class="control">
-                <input class="input " type="text" value="" placeholder="http://" [(ngModel)]="newLink.url">
+        <div class="column " style="padding-bottom: 0;">
+            <div class="field">
+                <div class="control">
+                    <input class="input " type="text" value="" name="linkUrl" placeholder="http://" [(ngModel)]="newLink.url" id="linkUrl" required #linkUrl="ngModel">
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="column is-one-fifth" style="padding-bottom: 0; padding-left:0">
-        <button mat-button (click)="addNewUrl()">
+        <div class="column is-one-fifth" style="padding-bottom: 0; padding-left:0">
+            <button mat-button [disabled]="!newLinkForm.form.valid">
             <mat-icon>add</mat-icon> Add
           </button>
+        </div>
     </div>
-</div>
+</form>
 
 <br/>

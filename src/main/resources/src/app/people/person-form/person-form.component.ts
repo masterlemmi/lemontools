@@ -57,6 +57,7 @@ export class PersonFormComponent implements OnInit {
     console.log("form state received state", this.person);
     this.setFormValues();
     //drop down list of names to chose from
+    this.peopleService.getAllPeople().subscribe(data=>{})
   
   }
 
