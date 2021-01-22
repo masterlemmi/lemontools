@@ -13,6 +13,7 @@ export class SearchComponent implements OnInit {
 
   searchTerm: String = "";
   people: PersonSimple[] = [];
+  searching: boolean = false;
 
   constructor(private peopleService: PeopleService,
     private router: Router) { }
@@ -22,12 +23,16 @@ export class SearchComponent implements OnInit {
   }
 
   search() {
-    console.log("searching");
+    this.searching=true;
     this.peopleService.searchPersones(this.searchTerm).subscribe(
       data => {
         this.people = data;
+        this.searching=false;
       },
-      err => alert('Invalid Credentials')
+      err => {
+        alert('Invalid Credentials');
+        this.searching=false;
+      }
     );
   }
 

@@ -10,8 +10,8 @@
     </div>
 </div>
 
-
-<p>{{people.length}} Results </p>
+<progress *ngIf="searching" class="progress is-small is-primary" max="100">15%</progress>
+<p *ngIf="!searching">{{people.length}} Results </p>
 
 <mat-card *ngFor="let p of people" class="example-card" style="padding-bottom:0" (click)="toProfile(p)">
     <mat-card-header>

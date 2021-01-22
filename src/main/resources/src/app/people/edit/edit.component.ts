@@ -38,8 +38,6 @@ export class EditComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('personId');
     if (!this.person) { //no data to show as edit return to profile
       this.router.navigate([`/people/profile/${id}`]);
-    } else {
-      this.peopleService.getAllPeople(true).subscribe(data => {});
     }
   }
 
