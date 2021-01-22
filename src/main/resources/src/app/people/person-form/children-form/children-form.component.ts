@@ -39,7 +39,11 @@ export class ChildrenFormComponent implements OnInit {
   // filter and return the values
   filter(val: string): Observable<any[]> {
     // call the service which makes the http-request
-    return of(this.peopleService.allPeopleCache);
+    let childrenArray: PersonSimple[] = this.myForm.get("children").value;
+    let excludeList: PersonSimple[]  = Object.assign([], childrenArray);
+    excludeList.push(this.person);
+
+    return this.peopleService.searchCache(val, excludeList);
     //   .pipe(
     //     map(peepsArray => {
     //       let childrenArray = this.myForm.get("children").value;
