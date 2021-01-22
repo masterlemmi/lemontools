@@ -1,4 +1,4 @@
-<form [formGroup]="myForm" (keydown.enter)="$event.preventDefault()">
+<form [formGroup]="myForm" (keydown.enter)="$event.preventDefault()" *ngIf="doneLoadingCache">
 
     <mat-accordion class="example-headers-align" multi>
         <mat-expansion-panel>

@@ -6,6 +6,7 @@ import { Person } from 'app/people/models/person';
 import { PersonSimple } from 'app/people/models/person-simple';
 import { QuickCreateComponent } from 'app/people/quick-create/quick-create.component';
 import { PeopleService } from 'app/people/services/people.service';
+import { of } from 'rxjs/internal/observable/of';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 
@@ -38,9 +39,10 @@ export class ChildrenFormComponent implements OnInit {
    // filter and return the values
    filter(val: string): Observable<any[]> {
     // call the service which makes the http-request
-    return this.peopleService.getAllPeople()
+    return of(this.peopleService.allPeopleCache)
       .pipe(
         map(response => response.filter(person => {
+          console.log("cache", this.peopleService.allPeopleCache)
           let childrenArray =  this.myForm.get("children").value;
           let arr = childrenArray ? childrenArray : [];     
           //don't show already added

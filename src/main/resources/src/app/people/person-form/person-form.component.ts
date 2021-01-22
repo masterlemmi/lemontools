@@ -23,6 +23,7 @@ export class PersonFormComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @Input() person: Person ;
   myForm: FormGroup;
+  doneLoadingCache: boolean = false;
 
   genders = ['Male', 'Female'];
   constructor(
@@ -57,7 +58,7 @@ export class PersonFormComponent implements OnInit {
     console.log("form state received state", this.person);
     this.setFormValues();
     //drop down list of names to chose from
-    this.peopleService.getAllPeople().subscribe(data=>{})
+    this.peopleService.getAllPeople().subscribe(data=>{this.doneLoadingCache=true})
   
   }
 
