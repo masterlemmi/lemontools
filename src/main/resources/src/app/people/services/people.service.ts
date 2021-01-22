@@ -32,40 +32,13 @@ export class PeopleService {
   }
 
   searchCache(val: string, exclude: PersonSimple[]) : Observable<PersonSimple[]> {
-
-    let filtered: PersonSimple[] = this.allPeopleCache.filter( person => {
+    return of(this.allPeopleCache.filter( person => {
       const isInArray = exclude.find(x => x.firstName === person.firstName && x.lastName === person.lastName);
-      const firstNameMatch = person.firstName.toLowerCase().indexOf(val.toLowerCase()) === 0;
-      const lastNameMatch = person.lastName.toLowerCase().indexOf(val.toLowerCase()) === 0;
-      const nickNameMatch = person.nickname.toLowerCase().indexOf(val.toLowerCase()) === 0;
-      console.log(`${person.firstName} ---> isInArray: ${isInArray} firstNameMatch: ${firstNameMatch} lastNameMtach: ${lastNameMatch}: nickNameMatch : ${nickNameMatch}`)
-      
-      return !isInArray && (firstNameMatch
-                || lastNameMatch
-                || nickNameMatch )
-    })
-
-    return of(filtered);
-
-      //       let childrenArray = this.myForm.get("children").value;
-  
-      //       let filtered: PersonSimple[] =  peepsArray.filter(person => {
-  
-      //         let arr = childrenArray ? childrenArray : [];
-      //         //don't show already added
-      //         const isInArray = arr.find(x => x.firstName === person.firstName && x.lastName === person.lastName);
-      //         //don't show the person being edited
-      //         const notSelf: boolean = this.person.firstName !== person.firstName && this.person.lastName !== person.lastName;
-              
-      //         return !isInArray && notSelf && (person.firstName.toLowerCase().indexOf(val.toLowerCase()) === 0
-      //           || person.lastName.toLowerCase().indexOf(val.toLowerCase()) === 0
-      //           || person.nickname.toLowerCase().indexOf(val.toLowerCase()) === 0)
-      //       })
-  
-      //       console.log("filtered", filtered)
-  
-      //       return filtered;
-      //     })
+    //  console.log(`${person.firstName} ---> isInArray: ${isInArray} firstNameMatch: ${firstNameMatch} lastNameMtach: ${lastNameMatch}: nickNameMatch : ${nickNameMatch}`)
+      return !isInArray && (person.firstName.toLowerCase().indexOf(val.toLowerCase()) === 0
+                || person.lastName.toLowerCase().indexOf(val.toLowerCase()) === 0
+                || person.nickname ? person.nickname.toLowerCase().indexOf(val.toLowerCase()) === 0 : false )
+    }))
 
   }
 

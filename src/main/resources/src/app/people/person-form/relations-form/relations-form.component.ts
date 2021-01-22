@@ -19,8 +19,8 @@ import { of } from 'rxjs/internal/observable/of';
   styleUrls: ['./relations-form.component.css']
 })
 export class RelationsFormComponent implements OnInit {
- 
-  @Input()  myForm: FormGroup;
+
+  @Input() myForm: FormGroup;
   @Input() person: Person;
   namesListControl = new FormControl();
   labelsListControl = new FormControl();
@@ -28,21 +28,21 @@ export class RelationsFormComponent implements OnInit {
   relationships: Relation[] = [];
   filteredOptions: Observable<Name[]>;
   labelfilteredOptions: Observable<string[]>;
-  constructor(    public dialog: MatDialog, private peopleService: PeopleService) { }
+  constructor(public dialog: MatDialog, private peopleService: PeopleService) { }
 
   ngOnInit(): void {
     this.relationships = this.myForm.get("relationships").value;
-    this.labels = this.relationships.map( r => r.label);
+    this.labels = this.relationships.map(r => r.label);
 
     this.filteredOptions = this.namesListControl.valueChanges
-    .pipe(
-      startWith(''),
-      debounceTime(400),
-      distinctUntilChanged(),
-      switchMap(val => {
-        return this.filter(val || '')
-      })
-    );
+      .pipe(
+        startWith(''),
+        debounceTime(400),
+        distinctUntilChanged(),
+        switchMap(val => {
+          return this.filter(val || '')
+        })
+      );
 
     this.labelfilteredOptions = this.labelsListControl.valueChanges.pipe(
       startWith(''),
@@ -55,34 +55,13 @@ export class RelationsFormComponent implements OnInit {
     return this.labels.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
-   // filter and return the values
-   filter(val: string): Observable<any[]> {
+  // filter and return the values
+  filter(val: string): Observable<any[]> {
     // call the service which makes the http-request
-    return of(this.peopleService.allPeopleCache)
-      .pipe(
-        map(response => response.filter(person => {
-          let relationships: Relation[] = this.myForm.get("relationships").value;
-          let selectedLabel = this.labelsListControl.value;
-          let rel: Relation = relationships.find (x => x.label === selectedLabel);
-          let peopleArray: PersonSimple[] = [];
-          //console.log("selectedLabel", selectedLabel)
-          if (rel){
-            //console.log("rel found");
-            peopleArray = rel.people;
-          } else {
-            //console.log("norel found");
-          }
-
-          //console.log("peopleArra", peopleArray);
-          //don't show already added
-          const isInArray = peopleArray.find(x => x.firstName === person.firstName && x.lastName === person.lastName);
-          //don't show the person being edited
-          const notSelf: boolean = this.person.firstName !== person.firstName && this.person.lastName !== person.lastName;
-          return !isInArray && notSelf && (person.firstName.toLowerCase().indexOf(val.toLowerCase()) === 0
-            || person.lastName.toLowerCase().indexOf(val.toLowerCase()) === 0
-            || person.nickname.toLowerCase().indexOf(val.toLowerCase()) === 0)
-        }))
-      )
+    let relArray: PersonSimple[] = this.myForm.get("relationships").value;
+    let excludeList: PersonSimple[] = Object.assign([], relArray);
+    excludeList.push(this.person);
+    return this.peopleService.searchCache(val, excludeList);
   }
 
   createNewPerson() {
@@ -94,24 +73,24 @@ export class RelationsFormComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       console.log("result", result);
-      if (result != null){
+      if (result != null) {
         //this.addChild(result);
       }
     });
   }
 
   deleteRelation(selectedLabel: string, p: PersonSimple) {
-  
+
     let relationships: Relation[] = this.myForm.get("relationships").value;
-    let rel: Relation = relationships.find (x => x.label === selectedLabel);
-    if (rel){
-      let people: PersonSimple[]  = rel.people;  
-      let index = people.findIndex(d => { return d.firstName === p.firstName && d.lastName === p.lastName ; }); //find index in your array  
+    let rel: Relation = relationships.find(x => x.label === selectedLabel);
+    if (rel) {
+      let people: PersonSimple[] = rel.people;
+      let index = people.findIndex(d => { return d.firstName === p.firstName && d.lastName === p.lastName; }); //find index in your array  
       people.splice(index, 1);//remove element from array
 
-      if (people.length === 0){
+      if (people.length === 0) {
         console.log("empty");
-        let relIndex = relationships.findIndex(d => { return d.label === rel.label}); //find index in your array  
+        let relIndex = relationships.findIndex(d => { return d.label === rel.label }); //find index in your array  
         relationships.splice(relIndex, 1);//remove element from array
       }
 
@@ -119,17 +98,17 @@ export class RelationsFormComponent implements OnInit {
         relationships: relationships
       });
 
-    }  
+    }
   }
 
   addRelation(s: PersonSimple) {
     let relationships: Relation[] = this.myForm.get("relationships").value;
     let selectedLabel = this.labelsListControl.value;
-    let rel: Relation = relationships.find (x => x.label === selectedLabel);
-    if (rel){
-      let people: PersonSimple[]  = rel.people;
+    let rel: Relation = relationships.find(x => x.label === selectedLabel);
+    if (rel) {
+      let people: PersonSimple[] = rel.people;
       people.push(s);
-      
+
     } else {
       let newRel = new Relation(selectedLabel);
       newRel.people.push(s);
@@ -139,12 +118,12 @@ export class RelationsFormComponent implements OnInit {
     this.labelsListControl.setValue('');
     this.namesListControl.setValue('');
     console.log("rels", relationships);
-    console.log("form val", this.myForm.get("relationships").value )
-    this.labels = this.relationships.map( r => r.label);
-    
+    console.log("form val", this.myForm.get("relationships").value)
+    this.labels = this.relationships.map(r => r.label);
+
     this.myForm.patchValue({
       relationships: relationships
     });
-   }
+  }
 
 }
