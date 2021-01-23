@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Person } from '../models/person';
@@ -22,6 +22,10 @@ export class PersonFormComponent implements OnInit {
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @Input() person: Person ;
+
+  @Output() submitFormEvent = new EventEmitter<FormGroup>();
+
+
   myForm: FormGroup;
   doneLoadingCache: boolean = false;
 
@@ -43,6 +47,7 @@ export class PersonFormComponent implements OnInit {
       nickname: new FormControl(''),
       email: ['',	Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
       address: new FormControl(''),
+      photo: new FormControl(''),
       deceased: new FormControl(false),
       dateOfBirth: new FormControl(''),
       dateOfDeath: new FormControl(''),
@@ -72,6 +77,7 @@ export class PersonFormComponent implements OnInit {
       initials: this.person.initials,
       email: this.person.email,
       address: this.person.address,
+      photo: this.person.photo,
       age: this.person.age,
       deceased: this.person.deceased,
       dateOfBirth: this.datePipe.transform(this.person.dateOfBirth, 'yyyy-MM-dd'),
@@ -85,27 +91,10 @@ export class PersonFormComponent implements OnInit {
   }
 
   submitForm() {
-
-    this.peopleService.createOrUpdatePerson(this.myForm.value).subscribe(
-      data => {
-        this._snackBar.open("Success", '', {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top'
-        });
-        this._location.back();
-      }, 
-      err => {
-        this._snackBar.open("Error "  + err, '', {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top'
-        });
-       
-      }
-    )
+    this.submitFormEvent.emit(this.myForm);
   }
 
+  
   back() {
     this._location.back();
   }

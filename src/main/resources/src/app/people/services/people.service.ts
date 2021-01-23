@@ -51,7 +51,9 @@ export class PeopleService {
           //  console.log(`${person.firstName} ---> isInArray: ${isInArray} firstNameMatch: ${firstNameMatch} lastNameMtach: ${lastNameMatch}: nickNameMatch : ${nickNameMatch}`)
           return !isInArray && (person.firstName.toLowerCase().indexOf(val.toLowerCase()) === 0
             || person.lastName.toLowerCase().indexOf(val.toLowerCase()) === 0
-            || person.nickname ? person.nickname.toLowerCase().indexOf(val.toLowerCase()) === 0 : false)
+            || (person.nickname ? person.nickname.toLowerCase().indexOf(val.toLowerCase()) === 0 : false)
+            
+            )
         });
         return filtered;
       }))

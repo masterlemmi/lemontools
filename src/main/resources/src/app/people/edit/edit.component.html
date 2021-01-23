@@ -26,5 +26,5 @@
 </section>
 
 <div class="container" *ngIf="person">
-    <person-form [person]="person"></person-form>
+    <person-form [person]="person" (submitFormEvent)="submitForm($event)"></person-form>
 </div>
