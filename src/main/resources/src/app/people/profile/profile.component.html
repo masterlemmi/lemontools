@@ -27,19 +27,19 @@
     </section>
 
     <mat-card style="padding-bottom:0">
-        <div class="columns is-mobile p-0">
+        <div class="columns is-mobile p-0" *ngIf="p.age">
             <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">Age</label></div>
             <div class="column p-0"> {{p.age}} </div>
         </div>
-        <div class="columns is-mobile p-0">
+        <div class="columns is-mobile p-0" *ngIf="p.dateOfBirth">
             <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">Birthday</label>
             </div>
-            <div class="column p-0"> {{p.dateOfBirth}} </div>
+            <div class="column p-0"> {{p.dateOfBirth | date:'MMMM d, y'}} </div>
         </div>
         <div class="columns is-mobile p-0" *ngIf="p.deceased">
             <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">Death</label>
             </div>
-            <div class="column p-0"> {{p.dateOfDeath}} </div>
+            <div class="column p-0"> {{p.dateOfDeath | date:'MMMM d, y'}} </div>
         </div>
         <div class="columns is-mobile p-0" *ngIf="p.parents.length">
             <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">Parents</label>

@@ -17,8 +17,8 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class PeopleService {
 
-  private personesUrl: string = `${environment.server}/api/people`;
- // private personesUrl: string = `http://localhost:8081/api/people`;
+   private personesUrl: string = `${environment.server}/api/people`;
+  // private personesUrl: string = `http://localhost:8081/api/people`;
   public allPeopleCache: PersonSimple[] = [];
   clickHistory: PersonSimple[] = [];
 
@@ -26,6 +26,18 @@ export class PeopleService {
 
   constructor(private resService: ResourceService,
     private http: HttpClient,) { }
+
+  uploadPhoto(id, fileToUpload) :Observable<any> {
+    const endpoint = `${this.personesUrl}/${id}/image`;
+    const formData: FormData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+  
+    return this.http
+      .post(endpoint, formData).pipe(
+        tap(_ => this.log(`fetched person id=${id}`)),
+        catchError(this.handleError<Person>(`getPerson id=${id}`))
+      );
+  }
 
   updateCache(p: PersonSimple) {
     this.allPeopleCache.push(p);

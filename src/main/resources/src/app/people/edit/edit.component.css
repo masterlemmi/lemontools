@@ -1,21 +1,45 @@
-.example-action-buttons {
-    padding-bottom: 20px;
-  }
-  
-  .example-headers-align .mat-expansion-panel-header-title,
-  .example-headers-align .mat-expansion-panel-header-description {
-    flex-basis: 0;
-  }
-  
-  .example-headers-align .mat-expansion-panel-header-description {
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .example-headers-align .mat-form-field + .mat-form-field {
-    margin-left: 8px;
-  }
-
-  table {
-    width: 100%;
-  }
+    .example-action-buttons {
+        padding-bottom: 20px;
+    }
+    
+    .example-headers-align .mat-expansion-panel-header-title,
+    .example-headers-align .mat-expansion-panel-header-description {
+        flex-basis: 0;
+    }
+    
+    .example-headers-align .mat-expansion-panel-header-description {
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .example-headers-align .mat-form-field+.mat-form-field {
+        margin-left: 8px;
+    }
+    
+    table {
+        width: 100%;
+    }
+    
+    .update-photo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .profile-photo {
+        background-size: cover;
+        height: 100px;
+        width: 100px;
+        float: left;
+        padding-right: 1em;
+        position: relative;
+    }
+    
+    .uploading {
+        height: 100px;
+        width: 100px;
+        float: left;
+        padding-right: 1em;
+        position: relative;
+    }

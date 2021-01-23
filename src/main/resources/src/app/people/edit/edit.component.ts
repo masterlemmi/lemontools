@@ -10,6 +10,7 @@ import { Name } from '../models/names';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -19,6 +20,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 })
 export class EditComponent implements OnInit {
   person: Person = history.state.data;
+  profilePhoto: any;
+  uploadingPhoto: boolean = false;
+  fileToUpload;
 
   constructor(
     private peopleService: PeopleService,
@@ -28,7 +32,7 @@ export class EditComponent implements OnInit {
     private _location: Location,
     private datePipe: DatePipe,
     public dialog: MatDialog,
-    
+    private _snackBar: MatSnackBar
   ) {
 
   }
@@ -38,6 +42,8 @@ export class EditComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('personId');
     if (!this.person) { //no data to show as edit return to profile
       this.router.navigate([`/people/profile/${id}`]);
+    } else {
+
     }
   }
 
@@ -47,4 +53,50 @@ export class EditComponent implements OnInit {
     this._location.back();
   }
 
+
+  onFileChanged(event) {
+    const files = event.target.files;
+    if (files.length === 0)
+      return;
+
+    const mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+
+      this._snackBar.open("Only images are allowed", '', {
+        duration: 10000,
+        horizontalPosition: 'start',
+        verticalPosition: 'top'
+      });
+      return;
+    }
+
+    const reader = new FileReader();
+    let imagePath = files;
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+      this.profilePhoto = reader.result;
+    }
+
+    if (this.person.id) {
+      this.fileToUpload = files.item(0);
+      this.uploadPhoto();
+    }
+  }
+
+  uploadPhoto() {
+    if (this.fileToUpload) {
+      console.log("uploading photo");
+      this.uploadingPhoto = true;
+
+      this.peopleService.uploadPhoto(this.person.id, this.fileToUpload).subscribe(
+        data => {
+          this.uploadingPhoto = false;
+        },
+        err => {
+          console.log(err);
+          this.uploadingPhoto = false;
+        }
+      )
+    }
+  }
 }

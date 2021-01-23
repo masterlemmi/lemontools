@@ -1,6 +1,17 @@
 <section class="hero">
     <div class="hero-body">
         <div class="container">
+            <div *ngIf="!uploadingPhoto; else spinner" mat-card-avatar style="background-image: url({{profilePhoto}});
+            background-size: cover; height: 100px; width: 100px; float:left; padding-right:1em; position: relative">
+                <label for="fileInput" class="is-clickable update-photo"><u>[Upload Photo]</u></label>
+                <input class="file-input" id="fileInput" type="file" style="display:none" name="resume" (change)="onFileChanged($event)">
+
+            </div>
+            <ng-template #spinner>
+                <div mat-card-avatar class="uploading">
+                    <mat-spinner [diameter]="75"></mat-spinner>
+                </div>
+            </ng-template>
             <h2 class="title">
                 Edit Profile
             </h2>

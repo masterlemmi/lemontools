@@ -8,7 +8,7 @@ nickname : String;
 gender: string;
 fullName : String;
 initials : String;
-photoUrl : String;
+photoUrl : string;
 email : String;
 address : String;
 age : number;
