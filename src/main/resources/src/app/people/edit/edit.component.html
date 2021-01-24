@@ -1,6 +1,6 @@
 <section class="hero">
     <div class="hero-body">
-        <div class="container">
+        <div class="container" *ngIf="person">
             <div *ngIf="!uploadingPhoto; else spinner" mat-card-avatar style="background-image: url({{profilePhoto}});
             background-size: cover; height: 100px; width: 100px; float:left; padding-right:1em; position: relative">
                 <label for="fileInput" class="is-clickable update-photo"><u>[Upload Photo]</u></label>

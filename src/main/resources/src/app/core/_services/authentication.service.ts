@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../user';
@@ -23,7 +23,9 @@ export class AuthenticationService {
         const headers = new HttpHeaders( {
             authorization : 'Basic ' + btoa(username + ':' + password)
         } );
-        return this.http.get<any>(`${environment.server}/user`, {headers: headers})
+        const params = new HttpParams().append('remember-me', 'true');
+
+        return this.http.get<any>(`${environment.server}/user`, {headers: headers, params: params})
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', JSON.stringify(user));

@@ -40,7 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest()
                         .authenticated()
              .and()
-                .httpBasic();
+                .httpBasic()
+             .and()
+                .rememberMe().key("uniqueAndSecret");
 
     }//@formatter:on
 
