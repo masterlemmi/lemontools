@@ -19,11 +19,11 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(username, password) {
+    login(username, password, otp) {
         const headers = new HttpHeaders( {
             authorization : 'Basic ' + btoa(username + ':' + password)
         } );
-        const params = new HttpParams().append('remember-me', 'true');
+        const params = new HttpParams().append('remember-me', 'true').append('otp', otp);
 
         return this.http.get<any>(`${environment.server}/user`, {headers: headers, params: params})
             .pipe(map(user => {

@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 
 @Component
@@ -17,6 +18,9 @@ public class KeyCloakAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private TokenService tokenService;
+
+    private @Autowired
+    HttpServletRequest request;
 
 
     @Override
@@ -26,7 +30,7 @@ public class KeyCloakAuthenticationProvider implements AuthenticationProvider {
         try {
             //save tokens for resource use
             // TODO: this is executed at every login. access tokens are always requested and replaced. .. find better design
-            TokenResponse keyCloak = tokenService.requestAccessToken(authentication);
+            TokenResponse keyCloak = tokenService.requestAccessToken(authentication, request.getParameter("otp"));
 
             if (keyCloak == null) throw new BadCredentialsException("Bad Credentials");
 

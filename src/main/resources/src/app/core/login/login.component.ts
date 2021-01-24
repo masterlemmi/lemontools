@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
-            password: ['', Validators.required]
+            password: ['', Validators.required],
+            otp: ['', Validators.required]
         });
 
         localStorage.removeItem("RESOURCE_LIST");
@@ -56,7 +57,7 @@ export class LoginComponent implements OnInit {
         }
 
         this.loading = true;
-        this.authenticationService.login(this.f.username.value, this.f.password.value)
+        this.authenticationService.login(this.f.username.value, this.f.password.value, this.f.otp.value)
             .pipe(first())
             .subscribe(
                 data => {

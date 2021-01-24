@@ -43,7 +43,7 @@ public class TokenService {
 
     //from keycloak
 
-    public TokenResponse requestAccessToken(Authentication authentication) {
+    public TokenResponse requestAccessToken(Authentication authentication, String otp) {
         String name = authentication.getName();
         String password = authentication.getCredentials().toString();
 
@@ -58,6 +58,7 @@ public class TokenService {
         map.add("password", password);
         map.add("grant_type", "password");
         map.add("scope", "read write");
+        map.add("totp", otp);
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
         ResponseEntity<TokenResponse> response = restTemplate.postForEntity(url, request, TokenResponse.class, map);
