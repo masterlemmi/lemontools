@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
     .share(); // prevent the request being done multiple times
 
     this.person$.subscribe(data => {
-      if (data.photoUrl){
+      if (data.photo){
         this.profilePhoto = data.photoUrl;
       } 
     })
