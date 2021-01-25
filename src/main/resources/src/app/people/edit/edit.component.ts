@@ -53,6 +53,11 @@ export class EditComponent implements OnInit {
   }
 
 
+  toHome() {
+    this.router.navigateByUrl('/people');
+  }
+
+
   onFileChanged(event) {
     const files = event.target.files;
     if (files.length === 0)

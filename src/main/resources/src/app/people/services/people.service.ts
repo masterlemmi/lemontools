@@ -17,8 +17,8 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class PeopleService {
 
-   private personesUrl: string = `${environment.server}/api/people`;
-  // private personesUrl: string = `http://localhost:8081/api/people`;
+ private personesUrl: string = `${environment.server}/api/people`;
+  //   private personesUrl: string = `http://localhost:8081/api/people`;
   public allPeopleCache: PersonSimple[] = [];
   clickHistory: PersonSimple[] = [];
 
@@ -26,6 +26,15 @@ export class PeopleService {
 
   constructor(private resService: ResourceService,
     private http: HttpClient,) { }
+
+
+    getLabels() :Observable<string[]> {
+      const endpoint = `${this.personesUrl}/labels`;
+      return this.http.get<string[]>(endpoint, { headers: this.getHeaders() }).pipe(
+        tap(_ => this.log(`found labels`)),
+        catchError(this.handleError<string[]>('getLabels', []))
+      );
+    }
 
   uploadPhoto(id, fileToUpload) :Observable<any> {
     const endpoint = `${this.personesUrl}/${id}/image`;

@@ -25,6 +25,7 @@ export class RelationsFormComponent implements OnInit {
   namesListControl = new FormControl();
   labelsListControl = new FormControl();
   labels: string[] = [];
+  specialLabels: string[]  = [];
   relationships: Relation[] = [];
   filteredOptions: Observable<Name[]>;
   labelfilteredOptions: Observable<string[]>;
@@ -32,7 +33,14 @@ export class RelationsFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.relationships = this.myForm.get("relationships").value;
-    this.labels = this.relationships.map(r => r.label);
+    let currentLabels = this.relationships.map(r => r.label);
+
+    this.peopleService.getLabels().subscribe(data => {
+      this.specialLabels = data;
+      let combinedArrays = data.concat(currentLabels);
+      this.labels = [...new Set(combinedArrays)];
+    }
+    )
 
     this.filteredOptions = this.namesListControl.valueChanges
       .pipe(

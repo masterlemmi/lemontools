@@ -2,7 +2,7 @@
     <section class="hero">
         <div class="hero-body">
             <div class="container">
-                <div mat-card-avatar style="background-image: url({{p.photoUrl}});
+                <div mat-card-avatar style="background-image: url({{profilePhoto}});
                 background-size: cover; height: 100px; width: 100px; float:left; padding-right:1em">
                 </div>
                 <div style="margin-left: 7em">
@@ -17,9 +17,12 @@
             </div>
             <div style="float:right; position: absolute; top: 2em; right: 2em">
                 <i (click)="edit(p)" class="material-icons is-clickable">mode_edit</i>
+
             </div>
             <div style="float:left; position: absolute; top: .5em; left: 2em">
-                <i (click)="back()" class="material-icons is-clickable">arrow_back</i>
+
+                <i (click)="back()" class="material-icons is-clickable" style="margin-right:.5rem" matTooltip="Go Back">arrow_back</i>
+                <i (click)="toHome()" class="material-icons is-clickable" matTooltip="Person Finder">home</i>
             </div>
         </div>
 

@@ -15,6 +15,7 @@ import { DatePipe, Location } from '@angular/common';
 })
 export class ProfileComponent implements OnInit {
   person$: Observable<Person>;
+  profilePhoto: string = 'https://drive.google.com/uc?export=view&id=1jbqoefsTVSkVAZ8RwVC1CAAljs-M3GJz';
 
   constructor(
     private peopleService: PeopleService,
@@ -28,12 +29,20 @@ export class ProfileComponent implements OnInit {
     .switchMap(id => this.peopleService.getPerson(id)) // change the main stream to the Http async request
     .share(); // prevent the request being done multiple times
 
-
+    this.person$.subscribe(data => {
+      if (data.photoUrl){
+        this.profilePhoto = data.photoUrl;
+      } 
+    })
   }
 
   toRoute(id: number) {
     const rt = `/people/profile/${id}`;
     this.router.navigateByUrl(rt);
+  }
+
+  toHome() {
+    this.router.navigateByUrl('/people');
   }
 
   edit(p: Person){
