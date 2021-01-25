@@ -1,5 +1,8 @@
 package com.lemoncode.resource;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lemoncode.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -13,7 +16,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -27,6 +32,11 @@ public class HomeController {
 
     @Autowired
     TokenService tokenService;
+
+    @Autowired
+    CacheService cacheService;
+
+    ObjectMapper mapper = new ObjectMapper();
 
     @RequestMapping("/user")
     public Principal user(Principal user) {
@@ -48,6 +58,19 @@ public class HomeController {
 
         return ResponseEntity.ok().cacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES)).body(res);
 
+    }
+
+
+    @GetMapping("/resources/people/cache")
+    public ResponseEntity<Set<JsonNode>> getCachedProfiles() throws JsonProcessingException {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CacheService.CacheQueue<String> cacheQueue = cacheService.getCache(username);
+        Set<JsonNode> node = new HashSet<>();
+        for (String s : cacheQueue) {
+            JsonNode actualObj = mapper.readTree(s);
+            node.add(actualObj);
+        }
+        return ResponseEntity.ok().body(node);
     }
 
     private String getHealth(String url) {

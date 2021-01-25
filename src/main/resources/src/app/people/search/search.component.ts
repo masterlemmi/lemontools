@@ -19,7 +19,9 @@ export class SearchComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.people = this.peopleService.getHistory();
+    this.peopleService.getProfileCache().subscribe(
+      data=> this.people = data
+    );
   }
 
   search() {

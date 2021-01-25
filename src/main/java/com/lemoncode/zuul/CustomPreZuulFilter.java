@@ -25,9 +25,9 @@ public class CustomPreZuulFilter extends ZuulFilter {
         logger.info("in zuul filter URI:" + ctx.getRequest().getRequestURI());
 
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         String accessToken = tokenService.getAccessToken(username);
 
-        logger.info("----> accessToken " + accessToken);
         ctx.addZuulRequestHeader("Authorization", "Bearer " + accessToken);
 
         return null;

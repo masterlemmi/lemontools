@@ -17,8 +17,8 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class PeopleService {
 
- private personesUrl: string = `${environment.server}/api/people`;
-  //   private personesUrl: string = `http://localhost:8081/api/people`;
+  private personesUrl: string = `${environment.server}/api/people`;
+  //private personesUrl: string = `http://localhost:8089/api/people`;
   public allPeopleCache: PersonSimple[] = [];
   clickHistory: PersonSimple[] = [];
 
@@ -27,20 +27,28 @@ export class PeopleService {
   constructor(private resService: ResourceService,
     private http: HttpClient,) { }
 
-
-    getLabels() :Observable<string[]> {
-      const endpoint = `${this.personesUrl}/labels`;
-      return this.http.get<string[]>(endpoint, { headers: this.getHeaders() }).pipe(
+    getProfileCache(): Observable<PersonSimple[]> {
+      const endpoint = `resources/people/cache`;
+      return this.http.get<PersonSimple[]>(endpoint, { headers: this.getHeaders() }).pipe(
         tap(_ => this.log(`found labels`)),
-        catchError(this.handleError<string[]>('getLabels', []))
+        catchError(this.handleError<PersonSimple[]>('getLabels', []))
       );
     }
 
-  uploadPhoto(id, fileToUpload) :Observable<any> {
+
+  getLabels(): Observable<string[]> {
+    const endpoint = `${this.personesUrl}/labels`;
+    return this.http.get<string[]>(endpoint, { headers: this.getHeaders() }).pipe(
+      tap(_ => this.log(`found labels`)),
+      catchError(this.handleError<string[]>('getLabels', []))
+    );
+  }
+
+  uploadPhoto(id, fileToUpload): Observable<any> {
     const endpoint = `${this.personesUrl}/${id}/image`;
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
-  
+
     return this.http
       .post(endpoint, formData).pipe(
         tap(_ => this.log(`fetched person id=${id}`)),
@@ -61,8 +69,8 @@ export class PeopleService {
           return !isInArray && (person.firstName.toLowerCase().indexOf(val.toLowerCase()) === 0
             || person.lastName.toLowerCase().indexOf(val.toLowerCase()) === 0
             || (person.nickname ? person.nickname.toLowerCase().indexOf(val.toLowerCase()) === 0 : false)
-            
-            )
+
+          )
         });
         return filtered;
       }))

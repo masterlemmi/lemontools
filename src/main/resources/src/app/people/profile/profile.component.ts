@@ -31,8 +31,10 @@ export class ProfileComponent implements OnInit {
 
     this.person$.subscribe(data => {
       if (data.photo){
-        this.profilePhoto = data.photoUrl;
-      } 
+        this.profilePhoto = "http://localhost:8081/"+data.photoUrl;
+      } else {
+        this.profilePhoto = 'https://drive.google.com/uc?export=view&id=1jbqoefsTVSkVAZ8RwVC1CAAljs-M3GJz';
+      }
     })
   }
 

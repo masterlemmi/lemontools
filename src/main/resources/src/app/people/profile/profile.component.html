@@ -48,8 +48,8 @@
             <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">Parents</label>
             </div>
             <div class="column p-0">
-                <a *ngFor="let c of p.parents; last as isLast" (click)="toRoute(c.id)" style="display:inline; padding-right:.5rem">{{c.fullName}}
-                <span *ngIf="!isLast">,</span> </a>
+                <a *ngFor="let c of p.parents; last as isLast" (click)="toRoute(c.id)">{{c.fullName}}
+                <span *ngIf="!isLast" style="padding-right:.5rem">,</span> </a>
             </div>
         </div>
         <div class="columns is-mobile p-0" *ngIf="p.siblings.length">
@@ -57,16 +57,16 @@
             </div>
 
             <div class="column p-0">
-                <a *ngFor="let c of p.siblings; last as isLast" (click)="toRoute(c.id)" style="display:inline; padding-right:.5rem">{{c.fullName}}
-                <span *ngIf="!isLast">,</span> </a>
+                <a *ngFor="let c of p.siblings; last as isLast" (click)="toRoute(c.id)">{{c.fullName}}
+                <span *ngIf="!isLast" style="padding-right:.5rem">,</span> </a>
             </div>
         </div>
         <div class="columns is-mobile p-0" *ngIf="p.children.length">
             <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">Children</label>
             </div>
             <div class="column p-0">
-                <a *ngFor="let c of p.children; last as isLast" (click)="toRoute(c.id)" style="display:inline; padding-right:.5rem">{{c.fullName}}
-                <span *ngIf="!isLast">,</span> </a>
+                <a *ngFor="let c of p.children; last as isLast" (click)="toRoute(c.id)">{{c.fullName}}
+                <span *ngIf="!isLast" style="padding-right:.5rem">,</span> </a>
             </div>
 
 
@@ -81,8 +81,8 @@
         <div class="columns is-mobile p-0" *ngFor="let rel of p.relationships">
             <div class="column is-one-third is-size-1-mobile p-0"> <label class="label has-text-right">{{rel.label}}</label></div>
             <div class="column p-0">
-                <a *ngFor="let c of rel.people; last as isLast" (click)="toRoute(c.id)" style="display:inline; padding-right:.5rem">{{c.fullName}}
-                <span *ngIf="!isLast">,</span> </a>
+                <a *ngFor="let c of rel.people; last as isLast" (click)="toRoute(c.id)">{{c.fullName}}
+                <span *ngIf="!isLast" style="padding-right:.5rem">,</span> </a>
             </div>
         </div>
 
