@@ -1,6 +1,7 @@
 import { DataSource } from '@angular/cdk/table';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Manga } from '../model/manga';
@@ -14,10 +15,12 @@ import { MangaService } from '../services/manga.service';
 export class TrackerComponent implements OnInit {
   displayedColumns: string[] = ['hasUpdate', 'title', 'lastChapter', 'doneRead'];
   dataSource: DataSource<Manga>;
-  refreshing: boolean =  false;
+  refreshing: boolean = false;
 
 
-  constructor(private mangaSvc: MangaService, public dialog: MatDialog) {
+  constructor(private mangaSvc: MangaService, 
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog) {
     this.dataSource = new MangaDataSource(mangaSvc.getAllManga());
   }
 
@@ -36,13 +39,28 @@ export class TrackerComponent implements OnInit {
     )
   }
 
-  fetchUpdates(){
+  fetchUpdates() {
     this.refreshing = true;
-   let updates = this.mangaSvc.fetchUpdates().subscribe(data => {
-    this.refreshing = false;
-    this.dataSource = new MangaDataSource(this.mangaSvc.getAllManga());
-   });
-   }
+    let updates = this.mangaSvc.fetchUpdates().subscribe(
+      data => {
+        this.refreshing = false;
+        this.dataSource = new MangaDataSource(this.mangaSvc.getAllManga());
+        this._snackBar.open("Success", '', {
+          duration: 7000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
+      },
+      error => {
+        this.refreshing = false;
+        console.log(error);
+        this._snackBar.open("There was a problem fetching updates", '', {
+          duration: 10000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
+      });
+  }
 
   updateChapter(manga: Manga): void {
     const dialogRef = this.dialog.open(DialogUpdateChapter, {
@@ -70,7 +88,7 @@ export class TrackerComponent implements OnInit {
 export class MangaDataSource extends DataSource<Manga> {
 
   constructor(private data: Observable<Manga[]>) { super() }
-  
+
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<Manga[]> {
