@@ -11,11 +11,11 @@ import { Observable } from 'rxjs/Observable';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'children-form',
-  templateUrl: './children-form.component.html',
-  styleUrls: ['./children-form.component.css']
+  selector: 'parent-form',
+  templateUrl: './parent-form.component.html',
+  styleUrls: ['./parent-form.component.css']
 })
-export class ChildrenFormComponent implements OnInit {
+export class ParentFormComponent implements OnInit {
 
   @Input() myForm: FormGroup;
   @Input() person: Person;
@@ -39,8 +39,8 @@ export class ChildrenFormComponent implements OnInit {
   // filter and return the values
   filter(val: string): Observable<any[]> {
     // call the service which makes the http-request
-    let childrenArray: PersonSimple[] = this.myForm.get("children").value;
-    let excludeList: PersonSimple[]  = Object.assign([], childrenArray);
+    let parentsArray: PersonSimple[] = this.myForm.get("parents").value;
+    let excludeList: PersonSimple[]  = Object.assign([], parentsArray);
     excludeList.push(this.person);
     return this.peopleService.searchCache(val, excludeList);
   }
@@ -55,28 +55,28 @@ export class ChildrenFormComponent implements OnInit {
       console.log('The dialog was closed');
       console.log("result", result);
       if (result != null && result.singleAdd) {
-        this.addChild(result.data);
+        this.addParent(result.data);
       }
     });
   }
 
-  deleteChild(s: PersonSimple) {
-    let arr = this.myForm.get("children").value;
+  deleteParent(s: PersonSimple) {
+    let arr = this.myForm.get("parents").value;
 
     let index = arr.findIndex(d => { d.firstName === s.firstName && d.lastName === s.lastName }); //find index in your array
     arr.splice(index, 1);//remove element from array
 
     this.myForm.patchValue({
-      children: arr
+      parents: arr
     });
   }
 
-  addChild(s: PersonSimple) {
-    let arr = this.myForm.get("children").value;
+  addParent(s: PersonSimple) {
+    let arr = this.myForm.get("parents").value;
     arr.push(s);
 
     this.myForm.patchValue({
-      children: arr
+      parents: arr
     });
     this.namesListControl.setValue('')
   }

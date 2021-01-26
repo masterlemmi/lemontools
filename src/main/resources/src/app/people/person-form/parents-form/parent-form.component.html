@@ -1,0 +1,16 @@
+<div class="block">
+    <span class="tag" *ngFor="let c of myForm.value.parents" style="margin-top: .5em; margin-inline-end: .5em;">
+        {{c.fullName}}
+        <button class="delete is-small" (click)="deleteParent(c)"></button>
+    </span>
+</div>
+
+<mat-form-field class="example-full-width">
+    <input type="text" placeholder="Find Parent" aria-label="Number" matInput [formControl]="namesListControl" [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.fullName" (click)="addParent(option)">
+            {{option.fullName}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+<a (click)="createNewPerson()" class="help is-success">Create New Person</a>

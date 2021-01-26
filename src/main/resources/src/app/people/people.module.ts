@@ -12,17 +12,18 @@ import { PersonFormComponent } from './person-form/person-form.component';
 import { ChildrenFormComponent } from './person-form/children-form/children-form.component';
 import { LinkFormComponent } from './person-form/link-form/link-form.component';
 import { RelationsFormComponent } from './person-form/relations-form/relations-form.component';
+import { ParentFormComponent } from './person-form/parents-form/parent-form.component';
 
 
 @NgModule({
   exports: [SearchComponent, SharedModule],
   declarations: [SearchComponent, ProfileComponent, EditComponent, QuickCreateComponent, 
-    PersonFormComponent, AddComponent, MainComponent,  ChildrenFormComponent, LinkFormComponent, RelationsFormComponent],
+    PersonFormComponent, AddComponent, MainComponent,  ChildrenFormComponent, LinkFormComponent, RelationsFormComponent, ParentFormComponent],
    
   imports: [
     CommonModule,
     PeopleRoutingModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     DatePipe

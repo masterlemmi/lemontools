@@ -34,7 +34,7 @@ export class QuickCreateComponent {
     this.peopleService.createSimplePerson(this.model).subscribe(
       data => {
         this.peopleService.updateCache(data);
-        this.dialogRef.close({ success: true, data: data });
+        this.dialogRef.close({ success: true, data: data, singleAdd: !this.batchMode });
       },
       err => {
         console.log(err);
