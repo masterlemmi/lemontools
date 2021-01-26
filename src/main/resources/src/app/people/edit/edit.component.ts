@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SpinnerService } from 'app/shared/services/spinner.service';
 
 
 @Component({
@@ -33,7 +34,8 @@ export class EditComponent implements OnInit {
     private _location: Location,
     private datePipe: DatePipe,
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private spinner: SpinnerService
   ) {
 
   }
@@ -108,6 +110,8 @@ export class EditComponent implements OnInit {
 
   submitForm(form: FormGroup) {
 
+    this.spinner.spin();
+
     if (this.photoFileName) { //image was uploaded successfully so add the name to dto also
      console.log("there is a photofileName of " + this.photoFileName)
       form.patchValue({
@@ -137,8 +141,10 @@ export class EditComponent implements OnInit {
 
 
 
-    this.peopleService.createOrUpdatePerson(form.value).subscribe(
+    this.peopleService.createOrUpdatePerson(form.value)
+    .subscribe(
       data => {
+        this.spinner.stop()
         this._snackBar.open("Success", '', {
           duration: 3000,
           horizontalPosition: 'center',
@@ -147,6 +153,7 @@ export class EditComponent implements OnInit {
         this._location.back();
       },
       err => {
+        this.spinner.stop()
         this._snackBar.open("Error " + err, '', {
           duration: 3000,
           horizontalPosition: 'center',

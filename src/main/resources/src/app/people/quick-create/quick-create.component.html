@@ -1,6 +1,8 @@
 <h2 mat-dialog-title>Quick Create</h2>
+<mat-checkbox class="example-margin" [(ngModel)]="batchMode">Batch Entry</mat-checkbox>
 <div class="container">
-    <div [hidden]="submitted">
+
+    <div [hidden]="batchMode || submitted">
         <!-- <h1>New Person Form</h1> -->
         <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
             <div class="form-group">
@@ -30,8 +32,35 @@
             </div>
 
 
+            <div *ngIf="errorMsg" class="alert alert-danger is-size-7-mobile">
+                {{errorMsg}}
+            </div>
+
 
             <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid" style="margin-right:.5rem">Create & Add</button>
+            <button type="button" class="btn btn-default" (click)="onNoClick()">Cancel</button>
+        </form>
+    </div>
+
+    <div [hidden]="!batchMode || submitted">
+
+        <form (ngSubmit)="onBatchSubmit()" #batchForm="ngForm">
+            <div class="form-group">
+                <textarea class="textarea" placeholder="John/Smith/M" rows="8" id="batchText" required [(ngModel)]="model2.batchText" name="batchText" #batchText="ngModel">
+              </textarea>
+
+
+                <div [hidden]="batchText.valid || batchText.pristine" class="alert alert-danger">
+                    Text is required
+                </div>
+            </div>
+
+            <div *ngIf="errorMsg2" class="alert alert-danger is-size-7-mobile	">
+                {{errorMsg2}}
+            </div>
+
+
+            <button type="submit" class="btn btn-success" [disabled]="!batchForm.form.valid" style="margin-right:.5rem">Create & Add</button>
             <button type="button" class="btn btn-default" (click)="onNoClick()">Cancel</button>
         </form>
     </div>

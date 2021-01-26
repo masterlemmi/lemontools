@@ -17,8 +17,8 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class PeopleService {
 
-  private personesUrl: string = `${environment.server}/api/people`;
-  //private personesUrl: string = `http://localhost:8089/api/people`;
+ private personesUrl: string = `${environment.server}/api/people`;
+//   private personesUrl: string = `http://localhost:8081/api/people`;
   public allPeopleCache: PersonSimple[] = [];
   clickHistory: PersonSimple[] = [];
 
@@ -26,6 +26,14 @@ export class PeopleService {
 
   constructor(private resService: ResourceService,
     private http: HttpClient,) { }
+
+
+    createPeopleFromList(batchText): Observable<PersonSimple[]> {
+      console.log("batchtext", batchText)
+      const endpoint = `${this.personesUrl}/batch`;
+      const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+      return this.http.post<PersonSimple[]>(endpoint, batchText, { headers: headers });
+    }
 
     getProfileCache(): Observable<PersonSimple[]> {
       const endpoint = `resources/people/cache`;
@@ -55,6 +63,7 @@ export class PeopleService {
         catchError(this.handleError<Person>(`getPerson id=${id}`))
       );
   }
+
 
   updateCache(p: PersonSimple) {
     this.allPeopleCache.push(p);
@@ -98,11 +107,9 @@ export class PeopleService {
     });
   }
 
+ 
   createOrUpdatePerson(p: any) {
-    return this.http.post<any>(`${this.personesUrl}`, p, { headers: this.getHeaders() }).pipe(
-      tap(_ => this.log(`creating person`)),
-      catchError(this.handleError<any>('searchPersones', []))
-    );
+    return this.http.post<any>(`${this.personesUrl}`, p, { headers: this.getHeaders() });
   }
 
   /* GET persones whose name contains search term */
@@ -155,10 +162,7 @@ export class PeopleService {
 
   createSimplePerson(person: PersonSimple): Observable<PersonSimple> {
     console.log("received person", person);
-    return this.http.post<PersonSimple>(`${this.personesUrl}/simple`, person, { headers: this.getHeaders() }).pipe(
-      tap((person: PersonSimple) => this.log(`added simple person w/ id=${person.id}`)),
-      catchError(this.handleError<PersonSimple>('add simplePerson'))
-    );
+    return this.http.post<PersonSimple>(`${this.personesUrl}/simple`, person, { headers: this.getHeaders() });
   }
 
 

@@ -36,8 +36,6 @@ public class HomeController {
     @Autowired
     CacheService cacheService;
 
-    ObjectMapper mapper = new ObjectMapper();
-
     @RequestMapping("/user")
     public Principal user(Principal user) {
 
@@ -64,13 +62,7 @@ public class HomeController {
     @GetMapping("/resources/people/cache")
     public ResponseEntity<Set<JsonNode>> getCachedProfiles() throws JsonProcessingException {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CacheService.CacheQueue<String> cacheQueue = cacheService.getCache(username);
-        Set<JsonNode> node = new HashSet<>();
-        for (String s : cacheQueue) {
-            JsonNode actualObj = mapper.readTree(s);
-            node.add(actualObj);
-        }
-        return ResponseEntity.ok().body(node);
+        return ResponseEntity.ok().body(cacheService.getCache(username).asSet());
     }
 
     private String getHealth(String url) {

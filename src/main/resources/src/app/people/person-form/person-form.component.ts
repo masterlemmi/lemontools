@@ -12,6 +12,7 @@ import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'r
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { QuickCreateComponent } from '../quick-create/quick-create.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SpinnerService } from 'app/shared/services/spinner.service';
 
 @Component({
   selector: 'person-form',
@@ -63,7 +64,6 @@ export class PersonFormComponent implements OnInit {
     this.setFormValues();
     //drop down list of names to chose from
     this.peopleService.getAllPeople(true).subscribe(data=>{this.doneLoadingCache=true})
-  
   }
 
   setFormValues() {
@@ -87,7 +87,6 @@ export class PersonFormComponent implements OnInit {
       relationships: this.person.relationships,
       notes: this.person.notes
     });
-
   }
 
   submitForm() {
@@ -98,10 +97,6 @@ export class PersonFormComponent implements OnInit {
   back() {
     this._location.back();
   }
-
-
-
-
 
 }
 

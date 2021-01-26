@@ -8,10 +8,16 @@ import { PeopleService } from '../services/people.service';
   templateUrl: './quick-create.component.html',
   styleUrls: ['./quick-create.component.css']
 })
-export class QuickCreateComponent  {
+export class QuickCreateComponent {
   genders = ['Male', 'Female'];
   model = new PersonSimple();
+  model2 = { batchText: "" }
   submitted = false;
+  batchMode = false;
+  batchText = "";
+  errorMsg2;
+  errorMsg;
+
 
   constructor(
     private peopleService: PeopleService,
@@ -22,23 +28,37 @@ export class QuickCreateComponent  {
     this.dialogRef.close();
   }
 
- 
-  onSubmit() { 
+
+  onSubmit() {
     this.submitted = true;
     this.peopleService.createSimplePerson(this.model).subscribe(
-      data=>{
+      data => {
         this.peopleService.updateCache(data);
-        this.dialogRef.close({success: true, data: data});
+        this.dialogRef.close({ success: true, data: data });
       },
-      err=> {
+      err => {
         console.log(err);
-        this.submitted=false;
+        this.errorMsg = err;
+        this.submitted = false;
       }
     )
-
-
-    
   }
 
+  onBatchSubmit() {
+    this.submitted = true;
+    this.peopleService.createPeopleFromList(this.model2.batchText).subscribe(
+      data => {
+        for (var p of data) {
+          this.peopleService.updateCache(p);
+        }
+        this.dialogRef.close({ success: true, data: null });
+      },
+      err => {
+        console.log("ERR:", err);
+        this.errorMsg2 = err;
+        this.submitted = false;
+      }
+    )
+  }
 
 }

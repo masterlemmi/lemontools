@@ -8,6 +8,5 @@
 
 
 ### TODO
-1. two way verification
-2. mangasvc
-3. peoplesvc
+
+4. 
