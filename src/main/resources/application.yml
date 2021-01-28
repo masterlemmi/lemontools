@@ -55,10 +55,17 @@ zuul:
       path: /api/manga/**
       sensitiveHeaders: Cookie,Set-Cookie
       url: ${MANGASVC_URL}/api/manga
+      retryable: false
     api/people:
       path: /api/people/**
       sensitiveHeaders: Cookie,Set-Cookie
       url: ${PEOPLESVC_URL}/api/people
+      retryable: false
+    api/relations:
+      path: /api/relations/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      url: ${PEOPLESVC_URL}/api/relations
+      retryable: false
 
   Servlet30WrapperFilter:
     pre:

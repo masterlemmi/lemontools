@@ -1,0 +1,15 @@
+p {
+    font-family: Lato;
+}
+
+.sidebar {
+    background: #efefef;
+    padding: 10px;
+}
+
+.page {
+    margin-top: -3rem;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}

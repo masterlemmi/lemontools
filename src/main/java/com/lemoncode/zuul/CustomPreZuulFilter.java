@@ -40,7 +40,7 @@ public class CustomPreZuulFilter extends ZuulFilter {
         final RequestContext ctx = RequestContext.getCurrentContext();
         String URI = ctx.getRequest().getRequestURI();
 
-        return URI.contains("api/manga") || URI.contains("api/people");
+        return URI.contains("api/manga") || URI.contains("api/people") || URI.contains("api/relations");
     }
 
     @Override

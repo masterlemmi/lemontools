@@ -1,12 +1,16 @@
 <div class="container">
     <br/>
-    <h1 class="title">
+    <h2 class="title">
         People Finder
-    </h1>
+    </h2>
     <h1 class="subtitle">
         <button mat-button (click)="goToAddPage()"> <i class="material-icons">add</i> New Profile</button>
         <button mat-button (click)="quickAdd()"> <i class="material-icons">flash_on</i> Quick Add</button>
     </h1>
     <people-search></people-search>
+
+    <br/>
+    <button class="button is-small is-link is-light" [routerLink]="['/people/relations']">Identify Relations</button>
+
 
 </div>

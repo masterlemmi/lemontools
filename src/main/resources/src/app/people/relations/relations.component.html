@@ -1,0 +1,46 @@
+<div class="container profile-container" style="padding-bottom: 2em;">
+    <section class="hero">
+        <div class="hero-body">
+
+            <div style="float:left; position: absolute; top: .5em; left: 2em">
+                <i (click)="back()" class="material-icons is-clickable" style="margin-right:.5rem" matTooltip="Go Back">arrow_back</i>
+                <i (click)="toHome()" class="material-icons is-clickable" matTooltip="Person Finder">home</i>
+            </div>
+        </div>
+    </section>
+
+    <div>
+        <p class="is-size-6">Identify link between: </p>
+        <div class="columns is-mobile">
+            <mat-form-field class="column is-two-fifths">
+                <input type="text" placeholder="Person 1" matInput [formControl]="namesListControl" [matAutocomplete]="auto" required>
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.fullName" (click)='setPerson1(option)'>
+                        {{option.fullName}}
+                    </mat-option>
+                </mat-autocomplete>
+                <br/>
+            </mat-form-field>
+
+            <mat-form-field class="column is-two-fifths">
+                <input type="text" placeholder="Person 2" matInput [formControl]="namesListControl2" [matAutocomplete]="auto2" required>
+                <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions2 | async" [value]="option.fullName" (click)='setPerson2(option)'>
+                        {{option.fullName}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <div class="column is-fifth">
+                <button [disabled]="!namesListControl.valid || !namesListControl2.valid" class="button is-primary" (click)="findConnection()">Go</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="chartLoaded" style="border-style: outset;">
+        <div class="message-header" *ngIf="relationsLabel">
+            <p>{{relationsLabel}}</p>
+            <button class="delete" aria-label="delete"></button>
+        </div>
+        <relation-chart *ngIf="nodes" [links]="links" [nodes]="nodes"></relation-chart>
+    </div>
+
+</div>

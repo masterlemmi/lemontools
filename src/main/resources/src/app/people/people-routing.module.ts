@@ -5,6 +5,8 @@ import { AddComponent } from './add/add.component';
 import { EditComponent } from './edit/edit.component';
 import { MainComponent } from './main/main.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RelationChartComponent } from './relations/relation-chart/relation-chart.component';
+import { RelationsComponent } from './relations/relations.component';
 import { SearchComponent } from './search/search.component';
 
 
@@ -13,7 +15,8 @@ const routes: Routes = [
   { path: 'add', component: AddComponent},
   { path: 'profile/:personId', component: ProfileComponent },
   { path: 'edit/:personId', component: EditComponent},
-  
+  { path: 'relations', component: RelationsComponent},
+
 
 ];
 
