@@ -16,12 +16,13 @@ import { ParentFormComponent } from './person-form/parents-form/parent-form.comp
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { RelationChartComponent } from './relations/relation-chart/relation-chart.component';
 import { RelationsComponent } from './relations/relations.component';
+import { FamilyTreeComponent } from './family-tree/family-tree.component';
 
 
 @NgModule({
   exports: [SearchComponent, SharedModule],
   declarations: [SearchComponent, ProfileComponent, EditComponent, QuickCreateComponent, 
-    PersonFormComponent, AddComponent, MainComponent,  ChildrenFormComponent, LinkFormComponent, RelationsFormComponent, ParentFormComponent, RelationChartComponent, RelationsComponent],
+    PersonFormComponent, AddComponent, MainComponent,  ChildrenFormComponent, LinkFormComponent, RelationsFormComponent, ParentFormComponent, RelationChartComponent, RelationsComponent, FamilyTreeComponent],
    
   imports: [
     CommonModule,

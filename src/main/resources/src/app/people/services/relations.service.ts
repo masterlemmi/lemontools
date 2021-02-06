@@ -28,13 +28,20 @@ export class RelationsService {
   }
 
   getConnections(sourceId: number, targetId: number): Observable<Connection> {
-    const url = `${this.relationsUrl}/${sourceId}/${targetId}`;
+    const url = `${this.relationsUrl}/between/${sourceId}/${targetId}`;
     return this.http.get<Connection>(url, { headers: this.getHeaders() }).pipe(
       tap(_ => this.log(`fetched Connection id=${sourceId} tgtid=${targetId}`)),
       catchError(this.handleError<Connection>(`getConnection id=${sourceId} tgtid=${targetId}`))
     );
   }
 
+  getConnectionsTree(): Observable<Connection> {
+    const url = `${this.relationsUrl}/family-tree/111111`;
+    return this.http.get<Connection>(url, { headers: this.getHeaders() }).pipe(
+      tap(_ => this.log(`fetched family tree`)),
+      catchError(this.handleError<Connection>(`family tree`))
+    );
+  }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddComponent } from './add/add.component';
 import { EditComponent } from './edit/edit.component';
+import { FamilyTreeComponent } from './family-tree/family-tree.component';
 import { MainComponent } from './main/main.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RelationChartComponent } from './relations/relation-chart/relation-chart.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'profile/:personId', component: ProfileComponent },
   { path: 'edit/:personId', component: EditComponent},
   { path: 'relations', component: RelationsComponent},
+  { path: 'family-tree', component: FamilyTreeComponent},
 
 
 ];

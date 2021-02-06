@@ -1,4 +1,4 @@
-<form [formGroup]="myForm" (keydown.enter)="$event.preventDefault()" *ngIf="doneLoadingCache">
+<form [formGroup]="myForm" (keydown.enter)="handleEnterKeyPress($event)" *ngIf="doneLoadingCache">
 
     <mat-accordion class="example-headers-align" multi>
         <mat-expansion-panel>
@@ -91,7 +91,7 @@
             <div class="field">
                 <label class="label has-text-left">Notes</label>
                 <div class="control">
-                    <textarea class="textarea" formControlName="notes"></textarea>
+                    <textarea class="textarea" placeholder="..." formControlName="notes"></textarea>
                 </div>
             </div>
         </mat-expansion-panel>

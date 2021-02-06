@@ -100,6 +100,12 @@ export class PersonFormComponent implements OnInit {
     this._location.back();
   }
 
+  handleEnterKeyPress(e){
+    // console.log(e.target);
+    // if (!(e.target).is('textarea'))
+        e.preventDefault(); 
+  }
+
 }
 
 
