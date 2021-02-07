@@ -12,8 +12,8 @@ import { Subject } from 'rxjs';
 })
 export class RelationChartComponent implements OnInit {
   @Input() nodes: Node[] = []
-  clusters: ClusterNode[] ;
- @Input() links: Edge[] = []
+  @Input() clusters: ClusterNode[] ;
+  @Input() links: Edge[] = []
 
 
   constructor() { }
@@ -122,7 +122,7 @@ export class RelationChartComponent implements OnInit {
     if (!layout.isClustered) {
       this.clusters = undefined;
     } else {
-     // this.clusters = clusters;
+     //this.clusters = clusters;
     }
   }
 }

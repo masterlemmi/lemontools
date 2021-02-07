@@ -2,8 +2,9 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Edge, Node } from '@swimlane/ngx-graph';
+import { ClusterNode, Edge, Node } from '@swimlane/ngx-graph';
 import { SpinnerService } from 'app/shared/services/spinner.service';
+
 import { Observable } from 'rxjs/Observable';
 import { startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Connection } from '../models/connections';
@@ -31,6 +32,7 @@ export class FamilyTreeComponent implements OnInit {
   relationsLabel: string;
   links : Edge[] = []
   nodes: Node[] = []
+  clusters: ClusterNode[] = []
 
   constructor(private router: Router,
     private _location: Location,
@@ -77,12 +79,15 @@ export class FamilyTreeComponent implements OnInit {
         this.chartLoaded = true; 
         this.links = data.links;
         this.nodes = data.nodes;
+        this.clusters = data.clusters;
        this.relationsLabel = data.relationLabel;
       },
       err => {
         this.spinner.stop();
       }
     )
+
   }
 
 }
+
