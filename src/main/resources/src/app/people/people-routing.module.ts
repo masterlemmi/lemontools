@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'profile/:personId', component: ProfileComponent },
   { path: 'edit/:personId', component: EditComponent},
   { path: 'relations', component: RelationsComponent},
-  { path: 'family-tree', component: FamilyTreeComponent},
+  { path: 'family-tree/:personId', component: FamilyTreeComponent},
 
 
 ];

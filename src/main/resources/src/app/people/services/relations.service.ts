@@ -35,8 +35,8 @@ export class RelationsService {
     );
   }
 
-  getConnectionsTree(): Observable<Connection> {
-    const url = `${this.relationsUrl}/family-tree/111111`;
+  getConnectionsTree(personId): Observable<Connection> {
+    const url = `${this.relationsUrl}/family-tree/${personId}`;
     return this.http.get<Connection>(url, { headers: this.getHeaders() }).pipe(
       tap(_ => this.log(`fetched family tree`)),
       catchError(this.handleError<Connection>(`family tree`))

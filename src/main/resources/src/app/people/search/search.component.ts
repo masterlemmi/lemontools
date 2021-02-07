@@ -53,5 +53,10 @@ export class SearchComponent implements OnInit {
     this.peopleService.addToHistory(p);
   }
 
+  toFamilyTree(id){
+    const rt = `/people/family-tree/${id}`;
+    this.router.navigateByUrl(rt);
+  }
+
   
 }

@@ -1,9 +1,10 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ClusterNode, Edge, Node } from '@swimlane/ngx-graph';
 import { SpinnerService } from 'app/shared/services/spinner.service';
+import { of } from 'rxjs/internal/observable/of';
 
 import { Observable } from 'rxjs/Observable';
 import { startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -30,7 +31,7 @@ export class FamilyTreeComponent implements OnInit {
   person1: PersonSimple;
   person2: PersonSimple;
   relationsLabel: string;
-  links : Edge[] = []
+  links: Edge[] = []
   nodes: Node[] = []
   clusters: ClusterNode[] = []
 
@@ -38,10 +39,28 @@ export class FamilyTreeComponent implements OnInit {
     private _location: Location,
     private spinner: SpinnerService,
     private peopleService: PeopleService,
+    private route: ActivatedRoute,
     private relService: RelationsService) { }
 
   ngOnInit(): void {
-    this.findConnection();
+    this.chartLoaded = false;
+    this.spinner.spin();
+    let result$ = this.route.paramMap.map(paramMap => +paramMap.get('personId'))
+      .switchMap(id => this.relService.getConnectionsTree(id)).share();
+
+    result$.subscribe(
+      data => {
+        this.spinner.stop();
+        this.chartLoaded = true;
+        this.links = data.links;
+        this.nodes = data.nodes;
+        this.clusters = data.clusters;
+        this.relationsLabel = data.relationLabel;
+      },
+      err => {
+        this.spinner.stop();
+      }
+    )
 
   }
   toRoute(id: number) {
@@ -70,24 +89,8 @@ export class FamilyTreeComponent implements OnInit {
     this.person2 = val;
   }
 
-  findConnection(){
-    this.chartLoaded = false;   
-    this.spinner.spin();
-    this.relService.getConnectionsTree().subscribe(
-      data =>{
-        this.spinner.stop();
-        this.chartLoaded = true; 
-        this.links = data.links;
-        this.nodes = data.nodes;
-        this.clusters = data.clusters;
-       this.relationsLabel = data.relationLabel;
-      },
-      err => {
-        this.spinner.stop();
-      }
-    )
+  // findConnection(personId){
 
-  }
 
 }
 

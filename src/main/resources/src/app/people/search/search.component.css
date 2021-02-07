@@ -2,3 +2,8 @@
     padding: .75em;
 }
 
+.family-tree-button{
+    position:absolute;
+    top: 1rem;
+    right:2rem;
+}

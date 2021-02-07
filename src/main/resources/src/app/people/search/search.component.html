@@ -20,5 +20,9 @@
         <mat-card-title>{{p.fullName}}</mat-card-title>
         <mat-card-subtitle>{{p.nickname}}</mat-card-subtitle>
     </mat-card-header>
+    <button class="family-tree-button" mat-icon-button color="primary" aria-label="Family Tree" (click)="toFamilyTree(p.id);$event.stopPropagation()">
+        <i class="material-icons" style="padding-right: .5em;">account_tree</i>
+      </button>
 
-</mat-card>
+</mat-card>  
+
