@@ -26,7 +26,7 @@ export class RelationChartComponent implements OnInit {
 
 
   
-  layout: String | Layout = 'colaForceDirected';
+  layout: String | Layout = 'dagreCluster';
   layouts: any[] = [
     {
       label: 'Dagre',

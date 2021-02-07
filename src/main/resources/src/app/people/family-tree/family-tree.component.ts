@@ -62,6 +62,8 @@ export class FamilyTreeComponent implements OnInit {
       }
     )
 
+  //  this.temp();
+
   }
   toRoute(id: number) {
     const rt = `/people/profile/${id}`;
@@ -89,8 +91,12 @@ export class FamilyTreeComponent implements OnInit {
     this.person2 = val;
   }
 
-  // findConnection(personId){
+// temp(){
+//   this.chartLoaded = true;
+//   this.nodes = this.data.nodes;
+//   this.links = this.data.links;
+//   this.clusters = this.data.clusters;
+// }
 
 
 }
-
