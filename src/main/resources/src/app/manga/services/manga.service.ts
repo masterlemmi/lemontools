@@ -47,6 +47,10 @@ export class MangaService {
     return this.http.post<Manga[]>(`${this.mangaUrl}/fetch/updates`, body, httpOptions);
   }
 
+  addManga(body): Observable<Manga> {
+      return this.http.post<Manga>(`${this.mangaUrl}`, body, httpOptions);
+  }
+
   
   //  */
   private handleError<T>(operation = 'operation', result?: T) {

@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Manga } from '../model/manga';
 import { MangaService } from '../services/manga.service';
+import { AddMangaDialogComponent } from './add-manga-dialog/add-manga-dialog.component';
 
 @Component({
   selector: 'app-tracker',
@@ -82,7 +83,23 @@ export class TrackerComponent implements OnInit {
       }
     });
   }
-}
+
+  addManga(): void {
+      const dialogRef = this.dialog.open(AddMangaDialogComponent, {
+        width: '100%'
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+  
+      });
+    }
+  
+  
+    
+  }
+
+
 
 
 export class MangaDataSource extends DataSource<Manga> {

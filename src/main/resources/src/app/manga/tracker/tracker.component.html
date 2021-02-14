@@ -7,7 +7,7 @@
         </button>
     </h1>
     <h1 class="subtitle">
-        <button mat-raised-button color="accent"><i class="material-icons">add</i> Add New </button>
+        <button mat-raised-button color="accent" (click)="addManga()"><i class="material-icons">add</i> Add New </button>
     </h1>
     <table cdk-table [dataSource]="dataSource" class="table is-striped">
 
