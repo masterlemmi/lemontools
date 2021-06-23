@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ResourceService } from 'app/shared/services/resource.service';
 import { environment } from 'environments/environment';
+import { MangaUpdateResult } from '../model/manga-update-result';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,6 +13,7 @@ const httpOptions = {
 
 @Injectable({ providedIn: 'root' })
 export class MangaService {
+  
 
   private mangaUrl: string;
 
@@ -21,6 +23,7 @@ export class MangaService {
       this.mangaUrl = `${environment.server}/api/manga`;
     //this.mangaUrl = "http://localhost:8081/api/manga";
   }
+
 
   getHeaders(method: string): HttpHeaders {
     return new HttpHeaders({
@@ -33,6 +36,10 @@ export class MangaService {
     return this.http.get<Manga[]>(this.mangaUrl, httpOptions);
   }
 
+  getAllOngoingManga(): Observable<Manga[]> {
+    return this.http.get<Manga[]>(`${this.mangaUrl}/ongoing`, httpOptions);
+  }
+
   markDone(id: number): Observable<Manga> {
     let body = { id: id, done: true };
     return this.http.put<Manga>(`${this.mangaUrl}/done`, body, httpOptions);
@@ -42,13 +49,16 @@ export class MangaService {
     return this.http.put<Manga>(`${this.mangaUrl}/chapter`, body, httpOptions);
   }
 
-  fetchUpdates(): Observable<Manga[]> {
-    let body = {}
-    return this.http.post<Manga[]>(`${this.mangaUrl}/fetch/updates`, body, httpOptions);
+  fetchUpdates(): Observable<{}> {
+    return this.http.post<{}>(`${this.mangaUrl}/fetch/updates-async`, {}, httpOptions);
   }
 
   addManga(body): Observable<Manga> {
       return this.http.post<Manga>(`${this.mangaUrl}`, body, httpOptions);
+  }
+
+  getUpdateStatus(): Observable<MangaUpdateResult> {
+    return this.http.get<MangaUpdateResult>(`${this.mangaUrl}/updates-status`, httpOptions);
   }
 
   

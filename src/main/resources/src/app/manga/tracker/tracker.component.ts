@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Manga } from '../model/manga';
+import { MangaUpdateResult } from '../model/manga-update-result';
 import { MangaService } from '../services/manga.service';
 import { AddMangaDialogComponent } from './add-manga-dialog/add-manga-dialog.component';
 
@@ -22,7 +23,7 @@ export class TrackerComponent implements OnInit {
   constructor(private mangaSvc: MangaService, 
     private _snackBar: MatSnackBar,
     public dialog: MatDialog) {
-    this.dataSource = new MangaDataSource(mangaSvc.getAllManga());
+    this.dataSource = new MangaDataSource(mangaSvc.getAllOngoingManga());
   }
 
   ngOnInit(): void {
@@ -44,24 +45,51 @@ export class TrackerComponent implements OnInit {
     this.refreshing = true;
     let updates = this.mangaSvc.fetchUpdates().subscribe(
       data => {
-        this.refreshing = false;
-        this.dataSource = new MangaDataSource(this.mangaSvc.getAllManga());
-        this._snackBar.open("Success", '', {
-          duration: 7000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom'
-        });
+        console.log("received data", data);
+        this.checkUpdateStatus();
       },
       error => {
         this.refreshing = false;
-        console.log(error);
-        this._snackBar.open("There was a problem fetching updates", '', {
+        console.log("ERR", error);
+        this._snackBar.open("Error: Calling Updates Endpoint", '', {
           duration: 10000,
           horizontalPosition: 'center',
           verticalPosition: 'bottom'
         });
       });
   }
+
+  checkUpdateStatus(){
+    this.mangaSvc.getUpdateStatus().subscribe(
+      data => {
+        if (data.running){
+          //wait 3 secs and recurse
+          setTimeout( () => this.checkUpdateStatus(), 3000);
+        } else {
+          this.displayUpdateResult(data);
+        }
+      },
+      error => {
+        this.refreshing = false;
+        this._snackBar.open("Error fetching update status", '', {
+          duration: 10000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
+      }
+    );
+  }
+
+  displayUpdateResult(data: MangaUpdateResult){
+    this.refreshing = false;
+    this.dataSource = new MangaDataSource(this.mangaSvc.getAllOngoingManga());
+    this._snackBar.open(data.message, '', {
+      duration: 7000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    });
+  }
+
 
   updateChapter(manga: Manga): void {
     const dialogRef = this.dialog.open(DialogUpdateChapter, {
