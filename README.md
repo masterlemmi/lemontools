@@ -8,5 +8,5 @@
 
 
 ### TODO
-
-i4. test
+1. run update every hour between 7AM and 12AM
+2. return list on front view and immediately call backend

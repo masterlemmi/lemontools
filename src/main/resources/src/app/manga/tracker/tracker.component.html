@@ -54,4 +54,35 @@
         <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
         <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <hr>
+
+    <mat-card-header>
+        <mat-card-title>Done</mat-card-title>
+      </mat-card-header>
+
+    <table cdk-table [dataSource]="doneDataSource" class="table is-striped">
+
+        <!-- title Column -->
+        <ng-container cdkColumnDef="title">
+            <th cdk-header-cell *cdkHeaderCellDef> Title </th>
+            <td cdk-cell *cdkCellDef="let manga">
+                <a href="{{manga.url}}" target="_blank">{{manga.title}}</a>
+           
+            </td>
+        </ng-container>
+
+        <ng-container cdkColumnDef="rating">
+            <th cdk-header-cell *cdkHeaderCellDef> Rating </th>
+            <td cdk-cell *cdkCellDef="let manga">
+                <div>
+                <span style="color:rgb(197, 197, 54)"  *ngFor="let i of [].constructor(manga.rating)">★</span>
+            </div>
+            </td>
+        </ng-container>
+
+
+        <tr cdk-header-row *cdkHeaderRowDef="doneDisplayedColumns"></tr>
+        <tr cdk-row *cdkRowDef="let row; columns: doneDisplayedColumns;"></tr>
+    </table>
+    
 </div>

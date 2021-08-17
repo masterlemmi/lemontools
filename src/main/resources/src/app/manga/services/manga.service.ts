@@ -36,6 +36,11 @@ export class MangaService {
     return this.http.get<Manga[]>(this.mangaUrl, httpOptions);
   }
 
+  getDoneManga(): Observable<Manga[]> {
+    return this.http.get<Manga[]>(`${this.mangaUrl}/ended`, httpOptions);
+  }
+  
+
   getAllOngoingManga(): Observable<Manga[]> {
     return this.http.get<Manga[]>(`${this.mangaUrl}/ongoing`, httpOptions);
   }

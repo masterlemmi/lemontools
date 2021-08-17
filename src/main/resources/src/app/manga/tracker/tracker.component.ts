@@ -16,7 +16,9 @@ import { AddMangaDialogComponent } from './add-manga-dialog/add-manga-dialog.com
 })
 export class TrackerComponent implements OnInit {
   displayedColumns: string[] = ['hasUpdate', 'title', 'lastChapter', 'doneRead'];
+  doneDisplayedColumns: string[] = ['title', 'rating'];
   dataSource: DataSource<Manga>;
+  doneDataSource: DataSource<Manga>;
   refreshing: boolean = false;
 
 
@@ -24,6 +26,7 @@ export class TrackerComponent implements OnInit {
     private _snackBar: MatSnackBar,
     public dialog: MatDialog) {
     this.dataSource = new MangaDataSource(mangaSvc.getAllOngoingManga());
+    this.doneDataSource = new MangaDataSource(mangaSvc.getDoneManga());
   }
 
   ngOnInit(): void {
